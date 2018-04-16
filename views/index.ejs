@@ -1,0 +1,593 @@
+<% include partials/header %> 
+
+<h2 class="ui top attached header">
+  <i class="plug icon"></i>
+  <div class="content">
+   UK Electricity Generation - <%= date %>
+  </div>
+</h2>
+
+<!--maincontent-->
+        <div class="ui equal width center aligned padded stackable grid">
+            <div class="row">
+                <div class="sixteen wide mobile sixteen wide tablet seven wide computer column">
+                    <div class="ui raised segments">
+                        <div class="ui secondary segment">
+                            <h3 class="ui header">Energy Generation Fuel Mix - <%= time %></h3>
+                        </div>
+                        <div class="ui segment canvas-container">
+                            <canvas id="donutChart"></canvas>
+                        </div>
+                        <div class="ui secondary segment">
+                        <i class="info circle icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="sixteen wide mobile sixteen wide tablet nine wide computer column">
+                    <div class="ui raised segments">
+                        <div class="ui secondary segment">
+                            <h3 class="ui header">Current Generation by Energy Type - <%= time %></h3>
+                        </div>
+                        <div class="ui segment">
+                            <div class="ui grid">
+                                <div class="ui stretched row">
+                                    <div class="sixteen wide mobile sixteen wide tablet ten wide computer column canvas-container">
+                                        <div class="ui basic segment">
+                                           <canvas id="stackedBarChart"></canvas>
+                                        </div>
+                                    </div>
+                                    <div class="sixteen wide mobile sixteen wide tablet six wide computer column canvas-container">
+                                        <div class="ui basic segment notChart">
+                                            <div class="ui small red statistic">
+                                                <div class="value" id="counter1"></div>
+                                                <div class="label">
+                                                    Current Total
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ui basic segment notChart">
+                                            <div class="ui blue small statistic">
+                                                <div class="value" id="counter2"></div>
+                                                <div class="label">
+                                                    Fossil Fuels - <%=Math.floor((((coal+ccgt+other)/totalAll)*100)+0.5)%> %
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ui basic segment notChart">
+                                            <div class="ui small green statistic">
+                                                <div class="value" id="counter3"></div>
+                                                <div class="label">
+                                                    Renewables - <%=Math.floor((((solar+wind+biomass+hydro)/totalAll)*100)+0.5)%> %
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ui basic segment notChart">
+                                            <div class="ui small purple statistic">
+                                                <div class="value" id="counter4"></div>
+                                                <div class="label">
+                                                    Low Carbon - <%=Math.floor((((nuclear+ics+pumpHydro)/totalAll)*100)+0.5)%> %
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui secondary segment">
+                            <i class="info circle icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+     
+            <div class="row">
+                <div class="sixteen wide tablet sixteen wide computer column">
+                    <div class="ui raised segments">
+                        <div class="ui secondary segment">
+                            <h3 class="ui header">Today's Half-hourly and Total Generation</h3>
+                        </div>
+                        <div class="ui segment">
+                            <div class= "ui grid">
+                                <div class="ui stretched row">
+                                    <div class="sixteen wide mobile eleven wide tablet eleven wide computer column">
+                                        <div class="ui basic segment canvas-container">
+                                            <canvas id="lineChartToday"></canvas>
+                                        </div>
+                                    </div>
+                                    <div class="sixteen wide mobile five wide tablet five wide computer column">
+                                        <div class="ui basic segment notChart">
+                                            <div class="ui small red statistic">
+                                                <div class="value" id="counter5"></div>
+                                                <div class="label">
+                                                    Total Generated Today
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ui basic segment notChart">
+                                            <div class="ui blue small statistic">
+                                                <div class="value" id="counter6"></div>
+                                                <div class="label">
+                                                    Fossil Fuels - <%=Math.floor(((totalFossilToday/(totalMwhToday+totalSolarToday))*100)+0.5)%> %
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ui basic segment notChart">
+                                            <div class="ui small green statistic">
+                                                <div class="value" id="counter7"></div>
+                                                <div class="label">
+                                                    Renewables - <%=Math.floor((((totalRenewToday+totalSolarToday)/(totalMwhToday+totalSolarToday))*100)+0.5)%> %
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ui basic segment notChart">
+                                            <div class="ui small purple statistic">
+                                                <div class="value" id="counter8"></div>
+                                                <div class="label">
+                                                    Low Carbon - <%=Math.floor(((totalLowcToday/(totalMwhToday+totalSolarToday))*100)+0.5)%> %
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui secondary segment">
+                            <i class="info circle icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="sixteen wide mobile five wide tablet five wide computer column">
+                    <div class="ui raised segments">
+                        <div class="ui secondary segment">
+                            <h2 class="ui header">Generation vs Demand  - <%= time %></h2>
+                        </div>
+                        <div class="ui segment">
+                           <canvas id="stackedBarChart2" class="canvas-container"></canvas>
+                        </div>
+                         <div class="ui secondary segment">
+                        </div>
+                    </div>
+                </div>
+                <div class="eight wide tablet four wide computer column">
+                    <div class="ui raised segments">
+                        <div class="ui secondary segment">
+                            <h3 class="ui header">ChartJs Line Chart</h3>
+                        </div>
+                        <div class="ui segment">
+                            <canvas id="line-area"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="eight wide tablet four wide computer column">
+                    <div class="ui raised segments">
+                        <div class="ui secondary segment">
+                            <h3 class="ui header">ChartJs Bar Chart</h3>
+                        </div>
+                        <div class="ui segment">
+                            <canvas id="bar-area"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!--maincontent-->
+        
+<script>
+
+var ctx = document.getElementById("donutChart").getContext('2d'); 
+var ctx1 = document.getElementById("stackedBarChart").getContext('2d');
+var ctx2 = document.getElementById("stackedBarChart2").getContext('2d');
+var ctx3 = document.getElementById("lineChartToday");
+
+// countUp animation options
+var countOptions1 = {
+    useEasing: true, 
+    useGrouping: false, 
+    separator: ',', 
+    decimal: '.',
+    suffix: ' GW'
+};
+
+var countOptions2 = {
+    useEasing: true, 
+    useGrouping: true, 
+    separator: ',', 
+    decimal: '.',
+    suffix: ' GWh'
+};
+// countUp animation variables
+var count1 = new CountUp('counter1', 0, ((<%=totalAll%>).toFixed(1)), 1, 3, countOptions1);
+    if (!count1.error) {
+    count1.start();
+    } else {
+    console.error(count1.error);
+}
+
+var count2 = new CountUp('counter2', 0, ((<%=ccgt%>+<%=coal%>+<%=other%>).toFixed(1)), 1, 3, countOptions1);
+    if (!count2.error) {
+    count2.start();
+    } else {
+    console.error(count2.error);
+} 
+
+var count3 = new CountUp('counter3', 0, ((<%=solar%>+<%=wind%>+<%=biomass%>+<%=hydro%>).toFixed(1)), 1, 3, countOptions1);
+    if (!count3.error) {
+    count3.start();
+    } else {
+    console.error(count3.error);
+} 
+
+var count4 = new CountUp('counter4', 0, ((<%=nuclear%>+<%=ics%>+<%=pumpHydro%>).toFixed(1)), 1, 3, countOptions1);
+    if (!count4.error) {
+    count4.start();
+    } else {
+    console.error(count4.error);
+}  
+
+var count5 = new CountUp('counter5', 0, ((<%=totalMwhToday+totalSolarToday%>).toFixed(1)), 1, 3, countOptions2);
+    if (!count5.error) {
+    count5.start();
+    } else {
+    console.error(count5.error);
+}
+
+var count6 = new CountUp('counter6', 0, ((<%=totalFossilToday%>).toFixed(1)), 1, 3, countOptions2);
+    if (!count6.error) {
+    count6.start();
+    } else {
+    console.error(count6.error);
+}
+
+var count7 = new CountUp('counter7', 0, ((<%=totalRenewToday%>+<%=totalSolarToday%>).toFixed(1)), 1, 3, countOptions2);
+    if (!count7.error) {
+    count7.start();
+    } else {
+    console.error(count7.error);
+}  
+
+var count8 = new CountUp('counter8', 0, ((<%=totalLowcToday%>).toFixed(1)), 1, 3, countOptions2);
+    if (!count8.error) {
+    count8.start();
+    } else {
+    console.error(count8.error);
+}   
+
+var data = {
+    labels: ["Gas", "Coal", "Nuclear", "Wind", "Biomass", "Imports", "Hydro", "Solar"],
+    datasets: [{
+        label: 'Generation in Gigawatts',
+        data: [<%= ccgt %>, 
+               <%= coal %>, 
+               <%= nuclear %>, 
+               <%= wind %>, 
+               <%= biomass %>,
+               <%= ics %>,
+               <%= pumpHydro %>+<%= hydro %>,
+               <%= solar %>
+        ],
+        backgroundColor: [
+            'rgba(55,150,201,1)',
+            'rgba(200,87,83,1)',
+            'rgba(145,95,158,1)',
+            'rgba(37,186,161,1)',
+            'rgba(234,195,186,1)',
+            'rgba(199,202,141,1)',
+            'rgba(149,159,176,1)',
+            'rgba(255,159,64,0.8)'
+        ],
+        hoverBackgroundColor: [
+            'rgba(55,150,201,0.9)',
+            'rgba(200,87,83,0.9)',
+            'rgba(145,95,158,0.9)',
+            'rgba(37,186,161,0.9)',
+            'rgba(234,195,186,0.9)',
+            'rgba(199,202,141,0.9)',
+            'rgba(149,159,176,0.9)',
+            'rgba(255,159,64,0.7)'
+        ]
+    }]
+}
+
+var data2 = {
+      labels: ["Fossil Fuels", 
+               "Renewables", 
+               "Low Carbon"],
+      datasets: [{
+            label: 'Gas',
+            data: [<%=ccgt%>, null, null],
+            backgroundColor: 'rgba(55,150,201,1)',
+            hoverBackgroundColor: 'rgba(55,150,201,0.9)'
+          }, {
+            label: 'Coal',
+            data: [<%=coal%>, null, null],
+            backgroundColor: 'rgba(200,87,83,1)'
+          },  {
+            label: 'Nuclear',
+            data: [null, null, <%=nuclear%>],
+            backgroundColor: 'rgba(145,95,158,1)'
+          },  {
+            label: 'Wind',
+            data: [null, <%=wind%>, null],
+            backgroundColor: 'rgba(37,186,161,1)'
+          },  {
+            label: 'Biomass',
+            data: [null, <%=biomass%>, null],
+            backgroundColor: 'rgba(234,195,186,1)'
+          },  {
+            label: 'Imports',
+            data: [null, null, <%=ics%>],
+            backgroundColor: 'rgba(199,202,141,1)'
+          },  {
+            label: 'Other',
+            data: [<%=other%>, null, null],
+            backgroundColor: 'rgba(149,159,176,1)'
+          },  {
+            label: 'Solar',
+            data: [null, <%=solar%>, null],
+            backgroundColor: 'rgba(255,159,64,0.8)'
+          },  {
+            label: 'Hydro',
+            data: [null, <%=hydro%>, null],
+            backgroundColor: 'rgba(149,159,176,1)'
+          },  {
+            label: 'Storage',
+            data: [null, null, <%=pumpHydro%>],
+            backgroundColor: 'rgba(149,159,176,1)'
+          }
+    ]
+}
+
+var data3 = {
+    labels: ["Generation", "Demand"],
+    datasets: [{
+        label: 'Gigawatts',
+        data: [<%= totalAll %>, 
+               <%= indo %>
+        ],
+        backgroundColor: [
+            'rgba(55,150,201,1)',
+            'rgba(200,87,83,1)'
+        ],
+        hoverBackgroundColor: [
+            'rgba(55,150,201,0.9)',
+            'rgba(200,87,83,0.9)'
+        ]
+    }]
+}
+// var newTime = [];
+// var newTimeArray = <%=timeToday%>
+
+// newTimeArray.forEach(function(period){
+// 	var seconds = period*30*60;
+//     var hours= Math.floor(seconds/60/60);
+// 	if((seconds/60)-(hours*60) === 0){
+//     	var minutes = 0
+// 		newTime.push(hours+":"+minutes.toFixed(0)+0);
+//     } else {
+// 		var minutes = (seconds/60)-(hours*60);
+// 		newTime.push(hours+":"+minutes.toFixed(0));
+//     }
+// });
+
+// console.log(newTime);
+
+ 
+
+var data4 = {
+    labels: [<%= timeToday %>],
+    datasets: [{
+        fill: false,
+        label: 'Gas',
+        data: [<%=ccgtToday%>],
+        backgroundColor: 'rgba(55,150,201,1)',
+        borderColor: 'rgba(55,150,201,1)',
+        borderWidth: 3
+      }, {
+        fill: false,
+        label: 'Coal',
+        data: [<%=coalToday%>],
+        backgroundColor: 'rgba(200,87,83,1)',
+        borderColor: 'rgba(200,87,83,1)',
+        borderWidth: 3
+      },  {
+        fill: false,
+        label: 'Nuclear',
+        data: [<%=nuclearToday%>],
+        backgroundColor: 'rgba(145,95,158,1)',
+        borderColor: 'rgba(145,95,158,1)',
+        borderWidth: 3
+      },  {
+        fill: false,
+        label: 'Wind',
+        data: [<%=windToday%>],
+        backgroundColor: 'rgba(37,186,161,1)',
+        borderColor: 'rgba(37,186,161,1)',
+        borderWidth: 3
+      },  {
+        fill: false,
+        label: 'Biomass',
+        data: [<%=biomassToday%>],
+        backgroundColor: 'rgba(234,195,186,1)',
+        borderColor: 'rgba(234,195,186,1)',
+        borderWidth: 3
+      },  {
+        fill: false,
+        label: 'Imports',
+        data: [<%=icsToday%>],
+        backgroundColor: 'rgba(199,202,141,1)',
+        borderColor: 'rgba(199,202,141,1)',
+        borderWidth: 3
+      },  {
+        fill: false,
+        label: 'Hydro',
+        data: [<%=hydroTodayAll%>],
+        backgroundColor: 'rgba(149,159,176,1)',
+        borderColor: 'rgba(149,159,176,1)',
+        borderWidth: 3
+      },  {
+        fill: false,
+        label: 'Solar',
+        data: [<%=solarToday%>],
+        backgroundColor: 'rgba(255,159,64,0.8)',
+        borderColor: 'rgba(255,159,64,0.8)',
+        borderWidth: 3
+      }
+    ]
+}
+
+
+
+
+var bar = {
+    maintainAspectRatio: false,
+    responsive: true,
+    legend: {
+        display: false
+    },
+    tooltips: {
+      
+        callbacks: {
+            afterLabel: function(tooltipItem, data) {
+              var dataset = data.datasets[tooltipItem.datasetIndex];
+              var total = <%=totalAll%>
+              var currentValue = dataset.data[tooltipItem.index];
+              var percentage = Math.floor(((currentValue/total) * 100)+0.5);
+              return percentage + "%"
+            }
+        },
+        enabled: true,
+        intersect: false
+    },
+    scales: {
+        yAxes: [{
+            scaleLabel: {
+                display: true,
+                labelString: 'Generation - Gigawatts (GW)'
+            },
+            stacked: true,
+            ticks: {
+                beginAtZero:true
+            }
+        }],
+        xAxes: [{
+            stacked: true
+        }]
+    }
+}
+
+var doughnut = {
+    maintainAspectRatio: false,
+    responsive: true,
+    title: {
+        display: true,
+        position: "top",
+        text: "Generation in Gigawatts (GW)",
+        fontSize: 16,
+        fontColor: "#111"
+    },
+    tooltips: {
+        callbacks: {
+            afterLabel: function(tooltipItem, data) {
+               var dataset = data.datasets[tooltipItem.datasetIndex];
+               var total = <%=totalAll%>
+                var currentValue = dataset.data[tooltipItem.index];
+                var percentage = Math.floor(((currentValue/total) * 100)+0.5);
+                return percentage + "%";
+            }
+        }
+    },
+    legend: {
+        display: true,
+        position: "top",
+        fullwidth: true
+    }
+}
+
+var line = {
+  tooltips: {
+        enabled: true,
+        mode: 'index'
+    },
+    elements: {
+        point:{
+        radius: 0
+        }
+    },
+    legend: {
+        display: true
+    },
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+         xAxes: [{
+        //   type: 'time',
+        //   time: {
+        //       unit: 'hour',
+        //       format: 'hh:aa',
+        //       parser: 'hour',
+        //       stepSize: 1,
+        //       displayFormats: {
+        //                  hour: 'hA'
+        //              }
+        //   },
+          distribution: 'linear'
+        //   ticks: {
+        //     maxTicksLimit: 26,
+        //   }
+        }],
+        yAxes: [{
+            ticks: {
+                beginAtZero:false
+            },
+            scaleLabel: {
+                display: true,
+                labelString: 'Generation - Gigawatts (GW)'
+            }
+            
+        }]
+    }
+}
+
+var chart = new Chart(ctx, {
+    data: data,
+    type: 'doughnut',
+    options: doughnut
+});
+
+var chart2 = new Chart(ctx1, {
+    data: data2,
+    type: 'bar',
+    options: bar
+});
+
+var chart3 = new Chart(ctx2, {
+    data: data3,
+    type: 'bar',
+    options: bar
+});
+
+var lineChart = new Chart(ctx3, {
+    type: 'line',
+    data: data4,
+    options: line
+});
+
+document.getElementById('update').addEventListener('click', function() {
+			var type = document.getElementById('type').value;
+			chart.config.type = type;
+			chart.config.options = type;
+			chart.update();
+});
+		    
+
+</script>
+
+<!--maincontent-->
+        </div>
+    </div>
+
+
+<% include partials/footer %>
+
