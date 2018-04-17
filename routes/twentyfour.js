@@ -1,5 +1,4 @@
-var express = require("express");
-var   router  = express.Router(),
+var router = require('express').Router(),
     parseString = require('xml2js').parseString,
     moment = require('moment'),
     async = require('async'),
@@ -45,7 +44,7 @@ router.get("/twentyfour", function(req, res) {
             for(var t = 0; t<time24.length; t++){ 
                 time.push(moment(time24[t]).format('h'));
             }
-            res.render("twentyFour", {time: time, ccgt: ccgt, coal: coal, nuclear: nuclear, wind: wind, biomass: biomass, ics: ics, other: other});
+            res.render("twentyfour", {time: time, ccgt: ccgt, coal: coal, nuclear: nuclear, wind: wind, biomass: biomass, ics: ics, other: other});
         });
         
     });
