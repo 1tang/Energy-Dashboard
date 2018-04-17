@@ -1,15 +1,14 @@
-var express = require("express"),
-    router  = express.Router(),
+var express = require("express");
+var   router  = express.Router(),
     parseString = require('xml2js').parseString,
     moment = require('moment'),
     async = require('async'),
     mtz = require('moment-timezone'),
-    Promise = require("bluebird"),
-    request = Promise.promisifyAll(require("request"), {multiArgs: true});
+    request = require("request");
 
 var urlFuelInst = "https://api.bmreports.com/BMRS/FUELINST/V1?APIKey=16hudca3onmwxcy&ServiceType=xml";
 
-router.get("/24hr", function(req, res) {
+router.get("/twentyfour", function(req, res) {
     request(urlFuelInst, function(error, response, body){
         if(!error && response.statusCode == 200){
         var dataAll24 = body;
@@ -46,9 +45,7 @@ router.get("/24hr", function(req, res) {
             for(var t = 0; t<time24.length; t++){ 
                 time.push(moment(time24[t]).format('h'));
             }
-        res.render("24hr", {time: time, ccgt: ccgt, coal: coal, nuclear: nuclear, wind: wind, biomass: biomass, ics: ics, other: other});
-        
-            
+            res.render("twentyFour", {time: time, ccgt: ccgt, coal: coal, nuclear: nuclear, wind: wind, biomass: biomass, ics: ics, other: other});
         });
         
     });
