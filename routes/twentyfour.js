@@ -5,10 +5,11 @@ var router = require('express').Router(),
     mtz = require('moment-timezone'),
     request = require("request");
 
-var urlFuelInst = "https://api.bmreports.com/BMRS/FUELINST/V1?APIKey=16hudca3onmwxcy&ServiceType=xml";
+// url for past 24 hrs xml data (not solar)
+var fuelInst = "https://api.bmreports.com/BMRS/FUELINST/V1?APIKey=16hudca3onmwxcy&ServiceType=xml";
 
 router.get("/twentyfour", function(req, res) {
-    request(urlFuelInst, function(error, response, body){
+    request(fuelInst, function(error, response, body){
         if(!error && response.statusCode == 200){
         var dataAll24 = body;
         }
@@ -40,6 +41,7 @@ router.get("/twentyfour", function(req, res) {
                 other.push((othTot.toFixed(3)));
             }
             var time = [];
+            
             
             for(var t = 0; t<time24.length; t++){ 
                 time.push(moment(time24[t]).format('h'));

@@ -13,7 +13,7 @@
                 <div class="sixteen wide mobile sixteen wide tablet seven wide computer column">
                     <div class="ui raised segments">
                         <div class="ui secondary segment">
-                            <h3 class="ui header">Energy Generation Fuel Mix - <%= time %></h3>
+                            <h3 class="ui header">Energy Generation Fuel Mix at <%= time %></h3>
                         </div>
                         <div class="ui segment canvas-container">
                             <canvas id="donutChart"></canvas>
@@ -26,7 +26,7 @@
                 <div class="sixteen wide mobile sixteen wide tablet nine wide computer column">
                     <div class="ui raised segments">
                         <div class="ui secondary segment">
-                            <h3 class="ui header">Current Generation by Energy Type - <%= time %></h3>
+                            <h3 class="ui header">Current Generation by Energy Type at <%= time %></h3>
                         </div>
                         <div class="ui segment">
                             <div class="ui grid">
@@ -79,7 +79,6 @@
                     </div>
                 </div>
             </div>
-     
             <div class="row">
                 <div class="sixteen wide tablet sixteen wide computer column">
                     <div class="ui raised segments">
@@ -138,35 +137,50 @@
                 </div>
             </div>
             <div class="row">
-                <div class="sixteen wide mobile five wide tablet five wide computer column">
+                <div class="sixteen wide tablet sixteen wide computer column">
                     <div class="ui raised segments">
                         <div class="ui secondary segment">
-                            <h2 class="ui header">Generation vs Demand  - <%= time %></h2>
+                            <h3 class="ui header">Today's Demand Vs Generation</h3>
                         </div>
                         <div class="ui segment">
-                           <canvas id="stackedBarChart2" class="canvas-container"></canvas>
+                            <div class= "ui grid">
+                                <div class="ui stretched row">
+                                    <div class="sixteen wide mobile eleven wide tablet eleven wide computer column">
+                                        <div class="ui basic segment canvas-container">
+                                            <canvas id="lineChartDemand"></canvas>
+                                        </div>
+                                    </div>
+                                    <!--<div class="sixteen wide mobile five wide tablet five wide computer column">-->
+                                    <!--    <div class="ui basic segment notChart">-->
+                                    <!--        <div class="ui small red statistic">-->
+                                    <!--            <div class="value" id="counter5"></div>-->
+                                    <!--            <div class="label">-->
+                                    <!--                Total Generated Today-->
+                                    <!--            </div>-->
+                                    <!--        </div>-->
+                                    <!--    </div>-->
+                                    <!--    <div class="ui basic segment notChart">-->
+                                    <!--        <div class="ui blue small statistic">-->
+                                    <!--            <div class="value" id="counter6"></div>-->
+                                    <!--            <div class="label">-->
+                                    <!--                Fossil Fuels - <%=Math.floor(((totalFossilToday/(totalMwhToday+totalSolarToday))*100)+0.5)%> %-->
+                                    <!--            </div>-->
+                                    <!--        </div>-->
+                                    <!--    </div>-->
+                                    <!--    <div class="ui basic segment notChart">-->
+                                    <!--        <div class="ui small green statistic">-->
+                                    <!--            <div class="value" id="counter7"></div>-->
+                                    <!--            <div class="label">-->
+                                    <!--                Renewables - <%=Math.floor((((totalRenewToday+totalSolarToday)/(totalMwhToday+totalSolarToday))*100)+0.5)%> %-->
+                                    <!--            </div>-->
+                                    <!--        </div>-->
+                                    <!--    </div>-->
+                                    <!--</div>-->
+                                </div>
+                            </div>
                         </div>
-                         <div class="ui secondary segment">
-                        </div>
-                    </div>
-                </div>
-                <div class="eight wide tablet four wide computer column">
-                    <div class="ui raised segments">
                         <div class="ui secondary segment">
-                            <h3 class="ui header">ChartJs Line Chart</h3>
-                        </div>
-                        <div class="ui segment">
-                            <canvas id="line-area"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="eight wide tablet four wide computer column">
-                    <div class="ui raised segments">
-                        <div class="ui secondary segment">
-                            <h3 class="ui header">ChartJs Bar Chart</h3>
-                        </div>
-                        <div class="ui segment">
-                            <canvas id="bar-area"></canvas>
+                            <i class="info circle icon"></i>
                         </div>
                     </div>
                 </div>
@@ -178,8 +192,8 @@
 
 var ctx = document.getElementById("donutChart").getContext('2d'); 
 var ctx1 = document.getElementById("stackedBarChart").getContext('2d');
-var ctx2 = document.getElementById("stackedBarChart2").getContext('2d');
-var ctx3 = document.getElementById("lineChartToday");
+var ctx2 = document.getElementById("lineChartToday").getContext('2d');
+var ctx3 = document.getElementById("lineChartDemand");
 
 // countUp animation options
 var countOptions1 = {
@@ -254,7 +268,7 @@ var count8 = new CountUp('counter8', 0, ((<%=totalLowcToday%>).toFixed(1)), 1, 3
     console.error(count8.error);
 }   
 
-var data = {
+var data1 = {
     labels: ["Gas", "Coal", "Nuclear", "Wind", "Biomass", "Imports", "Hydro", "Solar"],
     datasets: [{
         label: 'Generation in Gigawatts',
@@ -340,42 +354,6 @@ var data2 = {
 }
 
 var data3 = {
-    labels: ["Generation", "Demand"],
-    datasets: [{
-        label: 'Gigawatts',
-        data: [<%= totalAll %>, 
-               <%= indo %>
-        ],
-        backgroundColor: [
-            'rgba(55,150,201,1)',
-            'rgba(200,87,83,1)'
-        ],
-        hoverBackgroundColor: [
-            'rgba(55,150,201,0.9)',
-            'rgba(200,87,83,0.9)'
-        ]
-    }]
-}
-// var newTime = [];
-// var newTimeArray = <%=timeToday%>
-
-// newTimeArray.forEach(function(period){
-// 	var seconds = period*30*60;
-//     var hours= Math.floor(seconds/60/60);
-// 	if((seconds/60)-(hours*60) === 0){
-//     	var minutes = 0
-// 		newTime.push(hours+":"+minutes.toFixed(0)+0);
-//     } else {
-// 		var minutes = (seconds/60)-(hours*60);
-// 		newTime.push(hours+":"+minutes.toFixed(0));
-//     }
-// });
-
-// console.log(newTime);
-
- 
-
-var data4 = {
     labels: [<%= timeToday %>],
     datasets: [{
         fill: false,
@@ -436,6 +414,69 @@ var data4 = {
       }
     ]
 }
+
+
+// var newTime = [];
+// var newTimeArray = <%=timeToday%>
+
+// newTimeArray.forEach(function(period){
+// 	var seconds = period*30*60;
+//     var hours= Math.floor(seconds/60/60);
+// 	if((seconds/60)-(hours*60) === 0){
+//     	var minutes = 0
+// 		newTime.push(hours+":"+minutes.toFixed(0)+0);
+//     } else {
+// 		var minutes = (seconds/60)-(hours*60);
+// 		newTime.push(hours+":"+minutes.toFixed(0));
+//     }
+// });
+
+// console.log(newTime);
+
+var data4 = {
+    labels: [<%= timeDem %>],
+    datasets: [{
+        type: "line",
+        fill: false,
+        label: 'Indo',
+        data: [<%=demandTodayIndo%>],
+        backgroundColor: 'rgba(55,150,201,1)',
+        borderColor: 'rgba(55,150,201,1)',
+        borderWidth: 3
+      }, {
+        type: "line",
+        fill: false,
+        label: 'Itsdo',
+        data: [<%=demandTodayItsdo%>],
+        backgroundColor: 'rgba(200,87,83,1)',
+        borderColor: 'rgba(200,87,83,1)',
+        borderWidth: 3
+      },  {
+        type: "line",
+        fill: false,
+        label: 'Generation (with solar)',
+        data: [<%=totalTodayWithSolar%>],
+        backgroundColor: 'rgba(145,95,158,1)',
+        borderColor: 'rgba(145,95,158,1)',
+        borderWidth: 3
+      }, {
+        type: "line",
+        fill: false,
+        label: 'Generation (no solar)',
+        data: [<%=totalToday%>],
+        backgroundColor: 'rgba(37,186,161,1)',
+        borderColor: 'rgba(37,186,161,1)',
+        borderWidth: 3
+      }, {
+        type: "bar",
+        label: "solar",
+        backgroundColor: 'rgba(37,186,161,1)',
+        data: [<%=solarToday%>],
+        borderColor: 'rgba(37,186,161,1)',
+        borderWidth: 3
+      }]
+};
+
 
 
 
@@ -505,7 +546,7 @@ var doughnut = {
     }
 }
 
-var line = {
+var line1 = {
   tooltips: {
         enabled: true,
         mode: 'index'
@@ -522,20 +563,7 @@ var line = {
     maintainAspectRatio: false,
     scales: {
          xAxes: [{
-        //   type: 'time',
-        //   time: {
-        //       unit: 'hour',
-        //       format: 'hh:aa',
-        //       parser: 'hour',
-        //       stepSize: 1,
-        //       displayFormats: {
-        //                  hour: 'hA'
-        //              }
-        //   },
           distribution: 'linear'
-        //   ticks: {
-        //     maxTicksLimit: 26,
-        //   }
         }],
         yAxes: [{
             ticks: {
@@ -550,29 +578,96 @@ var line = {
     }
 }
 
-var chart = new Chart(ctx, {
-    data: data,
+var line2 = {
+  tooltips: {
+        enabled: true,
+        mode: 'index'
+    },
+    elements: {
+        point:{
+            radius: 0
+        }
+    },
+    legend: {
+        display: true
+    },
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+         xAxes: [{
+          distribution: 'linear'
+        }],
+        yAxes: [{
+            ticks: {
+                beginAtZero:false
+            },
+            scaleLabel: {
+                display: true,
+                labelString: 'Gigawatts (GW)'
+            }
+            
+        }]
+    }
+}
+
+
+var donutChart = new Chart(ctx, {
+    data: data1,
     type: 'doughnut',
     options: doughnut
 });
 
-var chart2 = new Chart(ctx1, {
+var stackedBarChart  = new Chart(ctx1, {
     data: data2,
     type: 'bar',
     options: bar
 });
 
-var chart3 = new Chart(ctx2, {
+var lineChartToday = new Chart(ctx2, {
     data: data3,
-    type: 'bar',
-    options: bar
+    type: 'line',
+    options: line1
 });
 
-var lineChart = new Chart(ctx3, {
-    type: 'line',
+var lineChartDemand = new Chart(ctx3, {
+    type: 'bar',
     data: data4,
-    options: line
+    options: {
+		responsive: true,
+		maintainAspectRatio: false,
+		   elements: {
+              point:{
+                 radius: 0
+            }
+        },
+        legend: {
+            display: true
+        },
+		tooltips: {
+			mode: 'index',
+			intersect: true
+		},
+		scales: {
+             xAxes: [{
+                distribution: 'linear'
+             }],
+             yAxes: [{
+                ticks: {
+                    beginAtZero:false
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Gigawatts (GW)'
+                }
+            }]
+        }
+	}
 });
+
+
+
+
+
 
 document.getElementById('update').addEventListener('click', function() {
 			var type = document.getElementById('type').value;

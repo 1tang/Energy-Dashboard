@@ -10,14 +10,12 @@ var express = require("express"),
 // today's date formatted for bmreports
 var todayDate = moment().format("YYYY-MM-DD");
 
-// url's for live/current JSON and XML energy data
-var urlSolar = "https://www.solar.sheffield.ac.uk/ssfdb3/crud/nationalgrid/pvnowcast/0";
-var urlFuelInstCurr = "https://api.bmreports.com/BMRS/FUELINSTHHCUR/V1?APIKey=16hudca3onmwxcy&ServiceType=xml";
-var urlIndo = "https://api.bmreports.com/BMRS/INDOITSDO/V1?APIKey=16hudca3onmwxcy&ServiceType=xml";
+// url's for live/current (today only) JSON and XML energy data
+var solarInst = "https://www.solar.sheffield.ac.uk/ssfdb3/crud/nationalgrid/pvnowcast/0";
+var fuelInst = "https://api.bmreports.com/BMRS/FUELINSTHHCUR/V1?APIKey=16hudca3onmwxcy&ServiceType=xml";
 var todayGenFuel = "https://api.bmreports.com/BMRS/FUELHH/V1?APIKey=16hudca3onmwxcy&FromDate="+todayDate+"&ToDate="+todayDate+"&ServiceType=xml";
 var todaySolar = "https://api.bmreports.com/BMRS/B1630/V1?APIKey=16hudca3onmwxcy&SettlementDate="+todayDate+"&Period=*&ServiceType=xml";
-// url for past 24 hours json (not solar)
-var urlFuelInst = "https://api.bmreports.com/BMRS/FUELINST/V1?APIKey=16hudca3onmwxcy&ServiceType=xml";
+var todayDemand = "https://api.bmreports.com/BMRS/INDOITSDO/V1?APIKey=16hudca3onmwxcy&FromDate="+todayDate+"&ToDate="+todayDate+"&ServiceType=xml";
 
 
 // mutiple url requests using promises - uses the bluebird prmises library, serializing
@@ -25,9 +23,9 @@ var urlFuelInst = "https://api.bmreports.com/BMRS/FUELINST/V1?APIKey=16hudca3onm
 //handing at the end after page rendered
 router.get("/live", function(req, res) {
     var context = {};
-    request.getAsync(urlSolar).spread(function(response, body) {
+    request.getAsync(solarInst).spread(function(response, body) {
     context.one = JSON.parse(body);
-    return request.getAsync(urlFuelInstCurr);
+    return request.getAsync(fuelInst);
     }).spread(function(response, body) {
         parseString(body, function (err, result) {
              if(err){
@@ -35,7 +33,7 @@ router.get("/live", function(req, res) {
             }
             context.two = JSON.parse(JSON.stringify(result));
         });
-    return request.getAsync(urlIndo);
+    return request.getAsync(todayDemand);
     }).spread(function(response, body) {
     parseString(body, function (err, result) {
          if(err){
@@ -74,9 +72,7 @@ router.get("/live", function(req, res) {
         // time and date formatting for live/current data
         var time = moment(context.two.response.responseBody[0].dataLastUpdated[0]).tz("Europe/London").format('h:mm a');
         var date = moment().format('dddd MMMM Do');
-        // most current demand with solar data added to indo variable
-        var demLength = (context.three.response.responseBody[0].responseList[0].item).length-1;
-        var indo = (context.three.response.responseBody[0].responseList[0].item[(demLength)].demand[0]/1000)+(context.one.generation_MW/1000);
+        
         // non solar data for current day
         var arrayToday = context.four.response.responseBody[0].responseList[0].item;
         var timeToday = []; 
@@ -90,6 +86,7 @@ router.get("/live", function(req, res) {
         var pumpHydroToday = [];
         var hydroToday = [];
         var hydroTodayAll = [];
+        var totalToday = [];
         var totalMwhToday = 0;
         var totalFossilToday = 0;
         var totalRenewToday = 0;
@@ -100,7 +97,7 @@ router.get("/live", function(req, res) {
                 var bioTotal = ((arrayToday[i].other[0])/1000)+((arrayToday[i].biomass[0])/1000);
                 var hydroTotal = ((arrayToday[i].npshyd[0])/1000)+((arrayToday[i].ps[0])/1000);
                 // calculation for totalMWh within each item
-                var allTotal = ((arrayToday[i].intfr[0])/1000)+((arrayToday[i].intirl[0])/1000)+((arrayToday[i].intned[0])/1000)+((arrayToday[i].intew[0])/1000)+((arrayToday[i].oil[0])/1000)+((arrayToday[i].ocgt[0])/1000)+((arrayToday[i].other[0])/1000)+((arrayToday[i].biomass[0])/1000)+((arrayToday[i].ps[0])/1000)+((arrayToday[i].npshyd[0])/1000)+((arrayToday[i].ccgt[0])/1000)+((arrayToday[i].coal[0])/1000)+((arrayToday[i].nuclear[0])/1000)+((arrayToday[i].wind[0])/1000);
+                var allTotal = ((arrayToday[i].intfr[0])/1000)+((arrayToday[i].intirl[0])/1000)+((arrayToday[i].intned[0])/1000)+((arrayToday[i].intew[0])/1000)+((arrayToday[i].oil[0])/1000)+((arrayToday[i].ocgt[0])/1000)+((arrayToday[i].other[0])/1000)+((arrayToday[i].biomass[0])/1000)+((arrayToday[i].ps[0])/1000)+((arrayToday[i].npshyd[0])/1000)+((arrayToday[i].ccgt[0])/1000)+((arrayToday[i].coal[0])/1000)+((arrayToday[i].nuclear[0])/1000)+(((arrayToday[i].wind[0])/1000)*1.15);
                 //populate arrays to pass over to EJS
                 timeToday.push(arrayToday[i].settlementPeriod[0]);
                 ccgtToday.push((arrayToday[i].ccgt[0])/1000);
@@ -109,6 +106,7 @@ router.get("/live", function(req, res) {
                 windToday.push((arrayToday[i].wind[0])/1000);
                 hydroToday.push((arrayToday[i].npshyd[0])/1000);
                 pumpHydroToday.push((arrayToday[i].ps[0])/1000);
+                totalToday.push (allTotal);
                 icsToday.push(icsTotal);
                 otherToday.push(othTotal);
                 biomassToday.push(bioTotal);
@@ -128,13 +126,39 @@ router.get("/live", function(req, res) {
             solarToday.push((arraySolarToday[t].quantity[0])/1000);
             totalSolarToday += (((arraySolarToday[t].quantity[0]/1000)+(solar*2))/2);
         }
+        // push two more values to solarToday array so length matches other today arrays
         solarToday.push(solar);
         solarToday.push(solar);
+        // total half hourly array for all techs + solar combined (for use in demand line graph)
+        var totalTodayWithSolar = solarToday.map((item,i) => item + totalToday[i]);
+        
+        // Demand data for current day
+        var demLength = (context.three.response.responseBody[0].responseList[0].item).length;
+         // most current demand with solar data added to indo variable
+        // var indo = (context.three.response.responseBody[0].responseList[0].item[(demLength)].demand[0]/1000)+(context.one.generation_MW/1000);
+        // today's demand
+        var arrayDemandToday = context.three.response.responseBody[0].responseList[0].item;
+        var demandTodayIndo = [];
+        var demandTodayItsdo = [];
+        var timeDem = [];
+        for(var d = 0; d<(demLength/2); d++){
+            demandTodayIndo.push((arrayDemandToday[d].demand[0])/1000);
+            timeDem.push(arrayDemandToday[d].settlementPeriod[0]);
+        }
+        for(var e = (demLength/2); e<demLength; e++){
+            demandTodayItsdo.push((arrayDemandToday[e].demand[0])/1000);
+        }
+        // console.log(totalTodayWithSolar);
+        console.log(totalToday);
+        // console.log(solarToday);
+        
+       
+        
         // render page
-        res.render("live", {indo: indo, context: context, solar: solar, time: time, date: date, ccgt: ccgt, coal: coal, nuclear: nuclear, wind: wind, biomass: biomass, ics: ics, other: other, pumpHydro: pumpHydro, hydro: hydro, totalAll: totalAll,
+        res.render("live", {context: context, solar: solar, time: time, date: date, ccgt: ccgt, coal: coal, nuclear: nuclear, wind: wind, biomass: biomass, ics: ics, other: other, pumpHydro: pumpHydro, hydro: hydro, totalAll: totalAll,
                             timeToday: timeToday, ccgtToday: ccgtToday, coalToday: coalToday, nuclearToday: nuclearToday, windToday: windToday, biomassToday: biomassToday, icsToday: icsToday, otherToday: otherToday, solarToday: solarToday, hydroToday: hydroToday,
-                            pumpHydroToday: pumpHydroToday, hydroTodayAll: hydroTodayAll, totalMwhToday: totalMwhToday, totalFossilToday: totalFossilToday, totalRenewToday: totalRenewToday, totalLowcToday: totalLowcToday, totalSolarToday: totalSolarToday});
-        //  res.send(context.five);
+                            pumpHydroToday: pumpHydroToday, hydroTodayAll: hydroTodayAll, totalMwhToday: totalMwhToday, totalFossilToday: totalFossilToday, totalRenewToday: totalRenewToday, totalLowcToday: totalLowcToday, totalSolarToday: totalSolarToday,
+                            demandTodayIndo: demandTodayIndo, demandTodayItsdo: demandTodayItsdo, timeDem: timeDem, totalTodayWithSolar: totalTodayWithSolar, totalToday: totalToday});
     // error handling for bluebird promises   
     }).catch(function(err) {
     if(err){

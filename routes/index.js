@@ -6,7 +6,7 @@ router.use("/", require("./twentyfour"));
 
 //root route
 router.get("/", function(req, res){
-    res.render("landing");
+    res.redirect("/live");
 });
 
 // contact route
