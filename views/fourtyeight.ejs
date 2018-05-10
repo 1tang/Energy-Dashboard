@@ -1,0 +1,301 @@
+<% include partials/header %> 
+
+<h2 class="ui block header">
+  <i class="plug icon"></i>
+  <div class="content">
+   UK Electricity Generation - Past 48 Hours
+  </div>
+</h2>
+
+<!--maincontent-->
+<div class="ui equal width center aligned padded stackable grid">
+    <div class="row">
+        <div class="sixteen wide computer column">
+            <div class="ui raised segments">
+                <div class="ui secondary segment heading">
+                    <h3 class="ui header">Half-hourly Generation from <%=timeFrom%> until <%=timeTo%></h3>
+                </div>
+                <div class="ui segment">
+                    <div class= "ui grid">
+                        <div class="ui stretched row">
+                            <div class="sixteen wide computer column canvas-container">
+                                <div class="ui basic segment">
+                                    <canvas id="lineChart48"></canvas>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="ui secondary segment info">
+                      <i class="large info circle icon infopop" data-position="right center" data-variation="inverted" data-title="Today's Half-Hourly and Cumulative Generation" data-content="Generation figures from midnight until... The cumulative counters show the total generation today in GWh, along with figures broken down into generation type (fossil fuels, renewables and low carbon)"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="four wide computer four wide tablet sixteen wide mobile column">
+            <div class="ui raised segments">
+                <div class="ui segment mini-box">
+                    <div class="ui small red statistic">
+                        <div class="value" id="counter1"></div>
+                        <div class="label">
+                            Cumulative Generation from <%=timeFrom%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="four wide computer four wide tablet sixteen wide mobile column">
+            <div class="ui raised segments">
+                <div class="ui segment mini-box">
+                    <div class="ui small blue statistic">
+                        <div class="value" id="counter2"></div>
+                        <div class="label">
+                            Cumulative Fossil Fuels
+                        </div>
+                    </div>
+                    <div class="ui tiny blue statistic">
+                        <div class="value" id="counter5"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="four wide computer four wide tablet sixteen wide mobile column">
+            <div class="ui raised segments">
+                <div class="ui segment mini-box">
+                    <div class="ui small green statistic">
+                        <div class="value" id="counter3"></div>
+                        <div class="label">
+                            Cumulative Renewables
+                        </div>
+                    </div>
+                    <div class="ui tiny green statistic">
+                        <div class="value" id="counter6"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="four wide computer four wide tablet sixteen wide mobile column">
+            <div class="ui raised segments">
+                <div class="ui segment mini-box">
+                    <div class="ui small purple statistic">
+                        <div class="value" id="counter4"></div>
+                        <div class="label">
+                            Cumulative Low Carbon
+                        </div>
+                    </div>
+                    <div class="ui tiny purple statistic">
+                        <div class="value" id="counter7"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            
+        
+        
+<script>
+
+var countOptions2 = {
+    useEasing: true, 
+    useGrouping: true, 
+    separator: ',', 
+    decimal: '.',
+    suffix: ' GWh'
+};
+
+var countOptions1 = {
+    useEasing: true, 
+    useGrouping: true, 
+    decimal: '.',
+    suffix: ' %'
+};
+
+var count1 = new CountUp('counter1', 0, ((<%=totalMwhEmbedded%>).toFixed(1)), 1, 3, countOptions2);
+    if (!count1.error) {
+    count1.start();
+    } else {
+    console.error(count1.error);
+}
+
+var count2 = new CountUp('counter2', 0, ((<%=totalFossil48%>).toFixed(1)), 1, 3, countOptions2);
+    if (!count2.error) {
+    count2.start();
+    } else {
+    console.error(count2.error);
+}
+
+var count3 = new CountUp('counter3', 0, ((<%=renewTotalCumul%>).toFixed(1)), 1, 3, countOptions2);
+    if (!count3.error) {
+    count3.start();
+    } else {
+    console.error(count3.error);
+}
+
+var count4 = new CountUp('counter4', 0, ((<%=totalLowc48%>).toFixed(1)), 1, 3, countOptions2);
+    if (!count4.error) {
+    count4.start();
+    } else {
+    console.error(count4.error);
+}
+
+var count5 = new CountUp('counter5', 0, (Math.floor(((<%=totalFossil48%>)/(<%=totalMwhEmbedded%>))*100)+0.5).toFixed(1), 1, 3, countOptions1);
+    if (!count5.error) {
+    count5.start();
+    } else {
+    console.error(count5.error);
+}
+
+var count6 = new CountUp('counter6', 0, (Math.floor(((<%=renewTotalCumul%>)/(<%=totalMwhEmbedded%>))*100)+0.5).toFixed(1), 1, 3, countOptions1);
+    if (!count6.error) {
+    count6.start();
+    } else {
+    console.error(count6.error);
+}
+
+var count7 = new CountUp('counter7', 0, (Math.floor(((<%=totalLowc48%>)/(<%=totalMwhEmbedded%>))*100)+0.5).toFixed(1), 1, 3, countOptions1);
+    if (!count7.error) {
+    count7.start();
+    } else {
+    console.error(count7.error);
+}
+
+var ctx = document.getElementById("lineChart48");
+
+var data1 = {
+    labels: [<%= timePeriod %>],
+    datasets: [{
+        fill: true,
+        label: 'Gas',
+        data: [<%=ccgt%>],
+        backgroundColor: 'rgba(55,150,201,1)',
+        borderColor: 'rgba(55,150,201,1)',
+        borderWidth: 4
+      }, {
+        fill: true,
+        label: 'Coal',
+        data: [<%=coal%>],
+        backgroundColor: 'rgba(200,87,83,1)',
+        borderColor: 'rgba(200,87,83,1)',
+        borderWidth: 4
+      },  {
+        fill: true,
+        label: 'Nuclear',
+        data: [<%=nuclear%>],
+        backgroundColor: 'rgba(145,95,158,1)',
+        borderColor: 'rgba(145,95,158,1)',
+        borderWidth: 4
+      },  {
+        fill: true,
+        label: 'Wind (incl embedded)',
+        data: [<%=embeddedWind48%>],
+        backgroundColor: 'rgba(37,186,161,1)',
+        borderColor: 'rgba(37,186,161,1)',
+        borderWidth: 4
+      }, {
+        fill: true,
+        label: 'Biomass',
+        data: [<%=biomass%>],
+        backgroundColor: 'rgba(234,195,186,1)',
+        borderColor: 'rgba(234,195,186,1)',
+        borderWidth: 5
+      },  {
+        fill: true,
+        label: 'Imports',
+        data: [<%=ics%>],
+        backgroundColor: 'rgba(199,202,141,1)',
+        borderColor: 'rgba(199,202,141,1)',
+        borderWidth: 4
+      },  {
+        fill: true,
+        label: 'Hydro',
+        data: [<%=hydro%>],
+        backgroundColor: 'rgba(149,159,176,1)',
+        borderColor: 'rgba(149,159,176,1)',
+        borderWidth: 4
+      },  {
+        fill: true,
+        label: 'Solar',
+        data: [<%=solarCombined48%>],
+        backgroundColor: 'rgba(252,179,111,1)',
+        borderColor: 'rgba(252,179,111,1)',
+        borderWidth: 4
+      }
+    ]
+}
+
+
+
+var line1 = {
+  tooltips: {
+        mode: 'index',
+        intersect: false,
+        position: "nearest"
+    },
+    elements: {
+        point:{
+        radius: 0
+        }
+    },
+    legend: {
+        display: true
+    },
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+         xAxes: [{
+             distribution: 'series',
+             scaleLabel: {
+                display: true,
+                labelString: 'Half Hourly Period'
+             },
+             gridLines: {
+                 display: false
+             }
+            //  type: "time",
+            //  time: {
+            //      unit: "minute",
+            //      parser: "MMM Do HH:mmA"
+            //     //  displayFormats: {
+            //     //         'minute': "MMM Do HH:mmA"
+            //     //     }
+            //  }
+      }],
+        yAxes: [{
+            stacked: true,
+            ticks: {
+                beginAtZero:false
+            },
+            scaleLabel: {
+                display: true,
+                labelString: 'Generation - Gigawatts (GW)'
+            }
+            
+        }]
+    }
+}
+
+var lineChart48 = new Chart(ctx, {
+    data: data1,
+    type: 'line',
+    options: line1
+});
+
+</script>
+
+<!--maincontent-->
+
+<% include partials/footer %>
+
+
+
+
+
+
+
+
+
+
+

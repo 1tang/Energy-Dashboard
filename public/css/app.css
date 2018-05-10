@@ -1,0 +1,185 @@
+body {
+    background: #F2F2F2;
+    padding-top: 17px;
+    max-width: 1280px;
+    margin: auto;
+    height: 100%;
+    min-height: 100%;
+}
+
+.canvas-container {
+    background: white;
+    height: 475px;
+}
+
+.coming-soon {
+    background: #4097C7;
+}
+
+.mini-box {
+    background: white;
+    height: 180px;
+}
+
+.canvas-container-thin {
+    background: white;
+    height: 300px;
+}
+
+.ui.secondary.segment {
+    background-color: #F9F9F9;
+}
+
+.ui.secondary.segment.heading {
+    background-color: #F9F9F9;
+    text-align: center;
+    padding: 10px 14px;
+}
+
+.ui.secondary.segment.info {
+    background-color: #F9F9F9;
+    text-align: center;
+    padding: 4px 14px;
+    color: #525252;
+}
+
+div.ui.basic.segment.notchart {
+    margin: 0;
+    padding: 14px 14px 0px 14px;
+}
+
+h2.ui.block.header {
+    color: #3d3d3d;
+}
+
+h3.ui.header.left.aligned {
+    color: #4097C7;
+}
+
+h3.ui.header{
+    color: #3d3d3d;
+}
+
+.ui.top.large.blue.inverted.fixed.menu {
+    background: #4097C7;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #4097C7, #22B5AC);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #4097C7, #22B5AC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+                                    
+.vertical.footer.segment {
+    background: #4097C7;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    padding: 15px 0;
+}
+
+.sixteen.wide.mobile.seven.wide.tablet.seven.wide.computer.column.canvas-container {
+    padding: 0;
+}
+
+.ui.block.header {
+    background: #F9F9F9;
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*width: 100%;*/
+    padding: 15px 20px;
+}
+
+.ui.secondary.segment.mini-box {
+    max-height: 250px;
+    margin: 14px 0px;
+}
+
+p {
+    text-align: left;
+    font-size: 16;
+}
+
+a {
+    text-align: left;
+    font-size: 16;
+}
+
+
+.col-gas {
+    color: rgba(55,150,201, 1);
+}
+
+.col-coal {
+    color: rgba(200,87,83,1);
+}
+
+.col-nuclear {
+    color: rgba(145,95,158,1);
+}
+
+.col-wind{
+    color: rgba(37,186,161,1);
+}
+
+.col-biomass{
+    color: rgba(234,195,186,1);
+}
+
+.col-imports{
+    color: rgba(199,202,141,1);
+}
+
+.col-hydro{
+    color:  rgba(149,159,176,1);
+}
+
+.col-solar{
+    color: rgba(252,179,111,1);
+}
+
+
+
+.link-list {
+    text-align: center;
+}
+                                       
+/*MEDIA QUERIES*/
+
+ /*Mobile */
+@media only screen and (max-width: 767px) {
+  [class*="mobile hidden"]{
+    display: none !important;
+  }
+}
+
+
+/* Tablet / iPad Portrait */
+/*@media only screen and (min-width: 768px) and (max-width: 991px) {*/
+
+/*}*/
+
+
+/* Computer / Desktop / iPad Landscape */
+/*@media only screen and (min-width: 992px) and (max-width: 1199px) {*/
+  
+/*}*/
+
+
+/* Large Monitor */
+/*@media only screen and (min-width: 1200px) and (max-width: 1919px) {*/
+ 
+/*}*/
+
+
+/* Widescreen Monitor */
+/*@media only screen and (min-width: 1920px) {*/
+
+/*}*/
+
+/*footer move to bottom*/
+/*@media (min-height: 500px) {*/
+/*  .vertical.footer.segment { */
+/*    position: absolute;*/
+/*    bottom: 0;*/
+/*    width: 100%;*/
+/*  }*/
+/*}*/
+
+

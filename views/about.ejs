@@ -1,9 +1,73 @@
 <% include partials/header %>
 
-<h1>This is the about page</h1>
+<h2 class="ui block header">
+  <i class="archive icon"></i>
+  <div class="content">
+   About This Site
+  </div>
+</h2>
 
-<p>Lorem ipsum dolor amet occupy taiyaki trust fund 8-bit succulents lomo celiac, jianbing gochujang voluptate XOXO dolore ugh dolor. Artisan flannel tempor typewriter labore. Non laboris XOXO lyft succulents officia affogato, helvetica ut offal butcher narwhal humblebrag. Whatever artisan health goth freegan, kickstarter shabby chic 3 wolf moon tattooed biodiesel hell of quis franzen air plant pariatur.</p>
+<div class="ui equal width center aligned padded stackable grid">
+    <div class="row">
+        <div class="sixteen wide computer column">
+            <div class="ui raised segments">
+                <div class="ui  segment">
+                        <div class= "ui grid">
+                            <div class="ui stretched row">
+                                <div class="sixteen wide mobile twelve wide tablet twelve wide computer column">
+                                    <div class="ui basic segment">
+                                        <h3 class="ui header left aligned">
+                                          What is Energy Dashboard?
+                                        </h3>
+                                        <p> Energy Dashboard was developed to provide real time and historical information on UK energy topics, with an emphasis on clearly accessible facts and figures. Initially the site centres on electricity generation, but later updates will include sections on heat generation, renewable energy, carbon emissions and transport. Energy data is constantly changing and often difficult to obtain and decipher, the plan is for Energy Dashboard to become an easy-to-use resource for anyone needing informative facts and analysis on UK energy issues.</p>
+                                        <p> This early version of the site provides information on electricity generation and highlights the growing contribution of 'embedded' generation - smaller solar and wind energy plants which are not metered at the transmission level, instead connecting into local distribution grids. As the UK moves towards more renewable sources of generation this provides an increasingly complex problem for National Grid, who are required to balance supply and demand. The 'embedded' or 'distributed' electricity shows as a drop in demand and data on embedded generation is limited, and mostly protected under personal data regulation. National Grid therefore relies on estimated figures from sources such as <a target="_blank" href="https://www.solar.sheffield.ac.uk/pvlive/">Sheffield University</a>. With embedded electricity providing up to 10GW at peak demand times, it is becoming harder to assess how much capacity the UK requires to meet peak demands (especially in winter), and whether the underlying peak demand (at the level of final consumption) has been going up or down in recent years. </p>
+                                        <div class="ui divider"></div>
+                                        <h3 class="ui header left aligned">
+                                          Background
+                                        </h3>
+                                        <img class="ui small left floated rounded image" src="/images/portrait2.jpg">
+                                        <p>I've worked in the renewable energy for the several years, helping developers set up and finance solar, wind and biomass projects under the feed-in tariff (FiT) and Renewable Heat Incentive (RHI) schemes. A recent career change into coding and web development led to the development of this site, combining my background and interest in energy with my expanding web development skills.</p>
+                                        <p>The Energy Dashboard application obtains live and historic energy information through API services. The application uses a chain of requests to pull JSON and XML data from different sources, predominantly the UK National Grid (via Elexon). The website uses Chart.js to display the data and Semantic UI as the development framework, allowing a responsive / mobile-friendly layout.  </p>
+                                        <p>Please do <a href = "/contact">get in touch</a> with any feedback or questions you have on the site, or with any web development enquiries. </p>
 
-<p>Kogi farm-to-table thundercats echo park kitsch tote bag succulents, gastropub stumptown everyday carry velit ramps gluten-free reprehenderit gentrify. Farm-to-table hoodie shabby chic nisi post-ironic hexagon subway tile copper mug before they sold out. Hammock franzen raw denim, etsy deep v chambray listicle in hot chicken pour-over af quinoa farm-to-table leggings lo-fi. Bushwick ut paleo semiotics. Snackwave sunt typewriter dolore artisan la croix, authentic minim gastropub jean shorts deserunt everyday carry.</p>
+                                        <p><a href="https://www.linkedin.com/in/danthory/" target="_blank"><i class="linkedin blue icon big"></i>LinkedIn</a>
+                                        <a href="/docs/Dan Thory Resume.pdf"><i class="file alternate blue icon big"></i>Resume / CV</a>
+                                        <div class="ui divider"></div>
+                                        <h3 class="ui header left aligned">
+                                          What's Next?
+                                        </h3>
+                                        <p> Future plans for the site include incorporating a database and increasing the scope of the site to include more wide-ranging information on UK energy generation and usage. This will include sections on heating, renewable energy, carbon emissions and transport energy. Watch this space..! </p>
+                                    </div>
+                                </div>
+                                <div class="sixteen wide mobile four wide tablet four wide computer column">
+                                    <div class="ui secondary segment mini-box">
+                                        <h3 class="ui header left aligned">
+                                          DATA SOURCES
+                                        </h3>
+                                        <div class="ui link list left aligned">
+                                            <p><a target="_blank" href="https://www.solar.sheffield.ac.uk/pvlive/">Sheffield University</a><i class="chevron right icon"></i></p>
+                                            <p><a target="_blank" href="https://www.bmreports.com/bmrs/?q=help/about-us">BM Reports</a><i class="chevron right icon"></i></p>
+                                            <p><a target="_blank" href="https://www.nationalgrid.com/uk/electricity/market-operations-and-data/data-explorer">National Grid</a><i class="chevron right icon"></i></p>
+                                            <p><a target="_blank" href="http://www.renewableuk.com/page/UKWEDhome">Renewable UK</a><i class="chevron right icon"></i></p>
+                                        </div>
+                                    </div>
+                                    <div class="ui secondary segment mini-box">
+                                        <h3 class="ui header left aligned">
+                                          OTHER INFORMATION
+                                        </h3>
+                                        <div class="ui link list left aligned">
+                                            <p><a href="/embedded">What is Embedded Generation? </a><i class="chevron right icon"></i></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
 
 <% include partials/footer %>
