@@ -18,8 +18,14 @@ body {
 
 .mini-box {
     background: white;
-    height: 180px;
+    height: 200px;
 }
+
+.mini-stat-box {
+    background: white;
+    height: 200px;
+}
+
 
 .canvas-container-thin {
     background: white;

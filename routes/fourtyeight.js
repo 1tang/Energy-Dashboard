@@ -108,7 +108,6 @@ router.get("/fourtyeight", function(req, res) {
     solarToday.push(solar);
     solarToday.push((solar + (solarToday[solarToday.length-1]))/2);
     
-    console.log(solarToday[solarToday.length-1])
     // combined solar arrays 48 hours 
     var solarCombined48 = solarYest.concat(solarToday);
     // cumulative total solar
@@ -117,11 +116,6 @@ router.get("/fourtyeight", function(req, res) {
         totalSolar48 += item/2;
     });
     
-    console.log(totalSolar48)
-    
-    
-       console.log(coal.length);
-       console.log(solarCombined48.length);
     var convertTime = [];
     timePeriod.forEach(function(period){
     	var seconds = period*30*60;
