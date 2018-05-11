@@ -97,6 +97,11 @@ h3.ui.header{
     margin: 14px 0px;
 }
 
+a.header.item {
+    font-family: 'Roboto', sans-serif;
+    font-size: 18
+}
+
 p {
     text-align: left;
     font-size: 16;
