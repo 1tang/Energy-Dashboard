@@ -23,12 +23,10 @@ router.get("/about", function(req, res) {
 router.get("/data", function(req, res) { 
     res.render("data");
 });
+
 // embedded generation route
-
-
 router.get("/embedded", function(req, res) { 
     res.render("embedded");
 });
-
 
 module.exports = router;

@@ -3,21 +3,20 @@ var express    = require("express"),
     bodyParser = require('body-parser');
 
 
-// has to go above the route handler
+//to go above the route handlers
 app.use(bodyParser.json()); 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 
-// requiring main index route
+
 app.use(require("./routes"));
+
 // any other route catch-all
 app.get("*", function(req, res) {
     res.send("Sorry page not found..");
 });
 
-
-
 //===========================
 app.listen(process.env.PORT, process.env.IP, function() {
-    console.log("Energy Dash Server has started");
+    console.log("Energy Dashboard Server has started");
 });
