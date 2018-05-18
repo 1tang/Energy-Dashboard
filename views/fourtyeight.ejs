@@ -28,13 +28,13 @@
                     </div>
                 </div>
                 <div class="ui secondary segment info">
-                      <i class="large info circle icon infopop" data-position="right center" data-variation="inverted" data-title="Today's Half-Hourly and Cumulative Generation" data-content="Generation figures from midnight until... The cumulative counters show the total generation today in GWh, along with figures broken down into generation type (fossil fuels, renewables and low carbon)"></i>
+                      <i class="large info circle icon infopop" data-position="right center" data-variation="inverted" data-title="Half-hourly Generation from <%=timeFrom%> until <%=timeTo%>" data-content="Generation figures over the past 48 hours, the cumulative counters show the total generation in GWh during this period, along with figures broken down into generation type (fossil fuels, renewables and low carbon). Nuclear, biomass and imported generation provide a steady baseload of energy with gas and coal being adjusted around intermittent renewable energy, in order to meet demand."></i>
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="four wide computer four wide tablet sixteen wide mobile column">
+        <div class="four wide computer four wide tablet eight wide mobile column">
             <div class="ui raised segments">
                 <div class="ui segment mini-stat-box">
                     <div class="ui small red statistic">
@@ -43,10 +43,13 @@
                             Cumulative Generation from <%=timeFrom%>
                         </div>
                     </div>
+                    <div class="ui small red statistic">
+                        <div class="value" id="counter8"></div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="four wide computer four wide tablet sixteen wide mobile column">
+        <div class="four wide computer four wide tablet eight wide mobile column">
             <div class="ui raised segments">
                 <div class="ui segment mini-stat-box">
                     <div class="ui small blue statistic">
@@ -61,7 +64,7 @@
                 </div>
             </div>
         </div>
-        <div class="four wide computer four wide tablet sixteen wide mobile column">
+        <div class="four wide computer four wide tablet eight wide mobile column">
             <div class="ui raised segments">
                 <div class="ui segment mini-stat-box">
                     <div class="ui small green statistic">
@@ -76,7 +79,7 @@
                 </div>
             </div>
         </div>
-        <div class="four wide computer four wide tablet sixteen wide mobile column">
+        <div class="four wide computer four wide tablet eight wide mobile column">
             <div class="ui raised segments">
                 <div class="ui segment mini-stat-box">
                     <div class="ui small purple statistic">
@@ -173,6 +176,13 @@ var count7 = new CountUp('counter7', 0, (Math.floor(((<%=totalLowc48%>)/(<%=tota
     count7.start();
     } else {
     console.error(count7.error);
+}
+
+var count8 = new CountUp('counter8', 0, 100, 1, 3, countOptions1);
+    if (!count8.error) {
+    count8.start();
+    } else {
+    console.error(count8.error);
 }
 
 // chart.js 

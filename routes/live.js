@@ -171,7 +171,7 @@ router.get("/live", function(req, res) {
     // scale up offshore contribution (1.1645) based on 26.6% / 37.2% load factor (renewable UK ** will need an update**) & then calculate actual onshore load factor,  embedded estimate then added to metered wind output
     var embeddedWindToday = windToday.map((item, i) => (((item-(((offshoreWindCap/meteredWindCap)*item)*1.28))/(onshoreWindCap-embeddedEstimateWind))*embeddedEstimateWind)+item);
     // current latest figs scaled up
-    var windEmbedded = (((wind-(((offshoreWindCap/meteredWindCap)*wind)*1.28))/(onshoreWindCap-embeddedEstimateWind))*embeddedEstimateWind)+wind;
+    var windEmbedded = ((((wind-(((offshoreWindCap/meteredWindCap)*wind)*1.28))/(onshoreWindCap-embeddedEstimateWind))*embeddedEstimateWind)+wind);
   
     // new array with total generation incl embedded wind (not solar)
     var embeddedTotal = totalTodayNoWind.map((item,i) => item + embeddedWindToday[i]);
@@ -180,7 +180,7 @@ router.get("/live", function(req, res) {
     //cumulative grand total GWh
     var windMwhToday = 0;
     embeddedWindToday.forEach(function (item) {
-        windMwhToday += item/2;
+        windMwhToday += item/2
     });
     //cumulative grand total GWh
     var totalRenewTodayEmbedded = windMwhToday + totalRenewToday + totalSolarToday;
