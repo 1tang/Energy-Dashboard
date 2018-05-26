@@ -15,7 +15,7 @@ router.get("/live", function(req, res) {
     var todayDate = moment().format("YYYY-MM-DD");
 
     // url's for live/current (today only) JSON and XML energy data
-    var solarInst = "https://www.solar.sheffield.ac.uk/ssfdb3/crud/nationalgrid/pvnowcast/0";
+    var solarInst = "https://api0.solar.sheffield.ac.uk/pvlive/v1";
     var fuelInst = "https://api.bmreports.com/BMRS/FUELINSTHHCUR/V1?APIKey=16hudca3onmwxcy&ServiceType=xml";
     var todayGenFuel = "https://api.bmreports.com/BMRS/FUELHH/V1?APIKey=16hudca3onmwxcy&FromDate="+todayDate+"&ToDate="+todayDate+"&ServiceType=xml";
     var todaySolarWind = "https://api.bmreports.com/BMRS/B1630/V1?APIKey=16hudca3onmwxcy&SettlementDate="+todayDate+"&Period=*&ServiceType=xml";
@@ -58,7 +58,7 @@ router.get("/live", function(req, res) {
     }); 
 
      // Live / current solar data ( every 30 mins)
-    var solar = (context.one.generation_MW/1000);
+    var solar = (context.one.data[0][2]/1000);
     // Live / current non solar data (every 5 mins)
     var ccgt = (context.two.response.responseBody[0].responseList[0].item[0].currentMW[0]/1000);
     var coal = (context.two.response.responseBody[0].responseList[0].item[3].currentMW[0]/1000);
@@ -70,7 +70,7 @@ router.get("/live", function(req, res) {
     var pumpHydro = (context.two.response.responseBody[0].responseList[0].item[6].currentMW[0]/1000);
     var hydro = (context.two.response.responseBody[0].responseList[0].item[7].currentMW[0]/1000);
     var total = (context.two.response.responseBody[0].total[0].currentTotalMW[0]/1000);
-    var totalAll = (context.two.response.responseBody[0].total[0].currentTotalMW[0]/1000)+(context.one.generation_MW/1000);
+    var totalAll = (context.two.response.responseBody[0].total[0].currentTotalMW[0]/1000)+(context.one.data[0][2]/1000);
     // time and date formatting for live/current data
     var time = moment(context.two.response.responseBody[0].dataLastUpdated[0]).tz("Europe/London").format('h:mm A');
     var date = moment().format('dddd Do MMMM');

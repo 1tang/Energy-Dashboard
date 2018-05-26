@@ -14,7 +14,7 @@ router.get("/fourtyeight", function(req, res) {
     var todayDate = moment().format("YYYY-MM-DD");
     var yestDate = moment().subtract(1, 'days').format("YYYY-MM-DD");
     // url for past 48 hrs xml data (not solar)
-    var solarInst = "https://www.solar.sheffield.ac.uk/ssfdb3/crud/nationalgrid/pvnowcast/0";
+    var solarInst = "https://api0.solar.sheffield.ac.uk/pvlive/v1";
     var fuelInst = "https://api.bmreports.com/BMRS/FUELHH/V1?APIKey=16hudca3onmwxcy&FromDate="+yestDate+"&ToDate="+todayDate+"&ServiceType=xml";
     var todaySolar = "https://api.bmreports.com/BMRS/B1630/V1?APIKey=16hudca3onmwxcy&SettlementDate="+todayDate+"&Period=*&ServiceType=xml";
     var yestSolar = "https://api.bmreports.com/BMRS/B1630/V1?APIKey=16hudca3onmwxcy&SettlementDate="+yestDate+"&Period=*&ServiceType=xml";
@@ -47,7 +47,7 @@ router.get("/fourtyeight", function(req, res) {
             context.four = JSON.parse(JSON.stringify(result));
         });
     // latest solar data
-    var solar = (context.one.generation_MW/1000);
+    var solar = (context.one.data[0][2]/1000);
      // 48 hr generation data (going back every 30 mins)
     var array48 = context.two.response.responseBody[0].responseList[0].item;
     var timePeriod = []; 
@@ -118,6 +118,8 @@ router.get("/fourtyeight", function(req, res) {
         totalSolar48 += item/2;
     });
     
+    console.log(solarCombined48.length)
+    console.log(hydro.length)
     // convert national grid setttlement period to normal hourly time
     var convertTime = [];
     timePeriod.forEach(function(period){
@@ -173,7 +175,7 @@ router.get("/fourtyeight", function(req, res) {
     var renewTotalCumul = totalRenew48NoWind + totalSolar48 + embeddedWindCumul;
     
     res.render("fourtyeight", {timePeriod: timePeriod, timeTo: timeTo, timeFrom: timeFrom, ccgt: ccgt, coal: coal, nuclear: nuclear, wind: wind, biomass: biomass, ics: ics, other: other, hydro: hydro,
-                               embeddedTotal: embeddedTotal, embeddedWind48: embeddedWind48, totalMwhEmbedded: totalMwhEmbedded, totalFossil48: totalFossil48, renewTotalCumul: renewTotalCumul, totalLowc48: totalLowc48, solarCombined48: solarCombined48});
+                              embeddedTotal: embeddedTotal, embeddedWind48: embeddedWind48, totalMwhEmbedded: totalMwhEmbedded, totalFossil48: totalFossil48, renewTotalCumul: renewTotalCumul, totalLowc48: totalLowc48, solarCombined48: solarCombined48});
    // error handling for bluebird promises   
     }).catch(function(err) {
     if(err){
