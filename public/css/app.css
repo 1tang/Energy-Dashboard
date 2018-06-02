@@ -156,11 +156,18 @@ a {
 /*MEDIA QUERIES*/
 
  /*Mobile */
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 650px) {
   [class*="mobile hidden"]{
     display: none !important;
   }
 }
+
+@media only screen and (max-width: 380px) {
+  [class*="mobile-small hidden"]{
+    display: none !important;
+  }
+}
+
 
 
 /* Tablet / iPad Portrait */
