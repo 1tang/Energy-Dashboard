@@ -13,14 +13,14 @@ var express = require("express"),
 router.get("/live", function(req, res) {
     // today's date formatted for bmreports
     var todayDate = moment().format("YYYY-MM-DD");
-
+    var yestDate = moment().subtract(1, 'days').format("YYYY-MM-DD");
     // url's for live/current (today only) JSON and XML energy data
     var solarInst = "https://api0.solar.sheffield.ac.uk/pvlive/v1";
     var fuelInst = "https://api.bmreports.com/BMRS/FUELINSTHHCUR/V1?APIKey=16hudca3onmwxcy&ServiceType=xml";
     var todayGenFuel = "https://api.bmreports.com/BMRS/FUELHH/V1?APIKey=16hudca3onmwxcy&FromDate="+todayDate+"&ToDate="+todayDate+"&ServiceType=xml";
-    var todaySolarWind = "https://api.bmreports.com/BMRS/B1630/V1?APIKey=16hudca3onmwxcy&SettlementDate="+todayDate+"&Period=*&ServiceType=xml";
+    var todaySolar = "https://api0.solar.sheffield.ac.uk/pvlive/v1?start="+yestDate+"T23:30:00&end="+todayDate+"T23:59:59";
     var todayDemand = "https://api.bmreports.com/BMRS/INDOITSDO/V1?APIKey=16hudca3onmwxcy&FromDate="+todayDate+"&ToDate="+todayDate+"&ServiceType=xml";
-
+    
     var context = {};
     request.getAsync(solarInst).spread(function(response, body) {
     context.one = JSON.parse(body);
@@ -48,14 +48,9 @@ router.get("/live", function(req, res) {
             }
             context.four = JSON.parse(JSON.stringify(result));
         });
-        return request.getAsync(todaySolarWind);
+        return request.getAsync(todaySolar);
     }).spread(function(response, body) {
-        parseString(body, function (err, result) {
-             if(err){
-                console.log(err);
-            }
-            context.five = JSON.parse(JSON.stringify(result));
-    }); 
+            context.five = JSON.parse(body);
 
      // Live / current solar data ( every 30 mins)
     var solar = (context.one.data[0][2]/1000);
@@ -93,6 +88,7 @@ router.get("/live", function(req, res) {
     var totalFossilToday = 0;
     var totalRenewToday = 0;
     var totalLowcToday = 0;
+   
     for(var i = 0; i<arrayToday.length; i++){ 
             var icsTotal = ((arrayToday[i].intfr[0])/1000)+((arrayToday[i].intirl[0])/1000)+((arrayToday[i].intned[0])/1000)+((arrayToday[i].intew[0])/1000);
             var othTotal = ((arrayToday[i].oil[0])/1000)+((arrayToday[i].ocgt[0])/1000);
@@ -122,17 +118,18 @@ router.get("/live", function(req, res) {
             totalRenewToday += ((bioTotal+((arrayToday[i].npshyd[0])/1000))/2);
             totalLowcToday += ((arrayToday[i].nuclear[0])/1000)/2;
     }
-    
+  
     // solar only data for current day
-    var arraySolarToday = context.five.response.responseBody[0].responseList[0].item;
+    var arraySolarToday = context.five.data;
     var solarToday = [];
     
-    for(var t = arraySolarToday.length-1; t>=2; t-=3){
-        solarToday.push((arraySolarToday[t].quantity[0])/1000);
+    for(var t = 0; t<arraySolarToday.length; t++){
+        if (arraySolarToday[t][2] == null) {
+            arraySolarToday[t][2] = 0;
+        }
+        solarToday.push((arraySolarToday[t][2])/1000);
     }
-    // push two more values to solarToday array & todaySolarTotal so length matches other today arrays, first is an average
-    solarToday.push((solar + (solarToday[solarToday.length-1]))/2);
-    solarToday.push(solar);
+
     var totalSolarToday = 0;
     solarToday.forEach(function (item) {
         totalSolarToday += item/2;
@@ -180,7 +177,7 @@ router.get("/live", function(req, res) {
     //cumulative grand total GWh
     var windMwhToday = 0;
     embeddedWindToday.forEach(function (item) {
-        windMwhToday += item/2
+        windMwhToday += item/2;
     });
     //cumulative grand total GWh
     var totalRenewTodayEmbedded = windMwhToday + totalRenewToday + totalSolarToday;

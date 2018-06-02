@@ -13,7 +13,7 @@ body {
 }
 
 .coming-soon {
-    background: #4097C7;
+    background: #2092C8;
 }
 
 .mini-box {
@@ -58,17 +58,22 @@ h2.ui.block.header {
 }
 
 h3.ui.header.left.aligned {
-    color: #4097C7;
+    color: #2092C8;
 }
+
+.ui.link.list.left.aligned {
+    color: #22B5AC;
+}
+
 
 h3.ui.header{
     color: #3d3d3d;
 }
 
 .ui.top.large.blue.inverted.fixed.menu {
-    background: #4097C7;  /* fallback for old browsers */
-	background: -webkit-linear-gradient(to right, #4097C7, #22B5AC);  /* Chrome 10-25, Safari 5.1-6 */
-	background: linear-gradient(to right, #4097C7, #22B5AC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #2092C8;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #2092C8, #22B5AC);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #2092C8, #22B5AC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
                                     
 .vertical.footer.segment {
@@ -109,6 +114,7 @@ p {
 a {
     text-align: left;
     font-size: 16;
+    color: #2092C8;
 }
 
 .col-gas {
