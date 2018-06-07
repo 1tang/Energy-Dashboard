@@ -1,10 +1,10 @@
-var express    = require("express"),
-    app        = express(),
+let express = require("express"),
+    app = express(),
     bodyParser = require('body-parser');
 
 
 //to go above the route handlers
-app.use(bodyParser.json()); 
+app.use(bodyParser.json());
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 
@@ -17,6 +17,6 @@ app.get("*", function(req, res) {
 });
 
 //===========================
-app.listen(process.env.PORT, process.env.IP, function() {
+app.listen(process.env.PORT, process.env.IP, () => {
     console.log("Energy Dashboard Server has started");
 });

@@ -113,7 +113,7 @@ $('.infopop').popup({
   });
 
 // countUp animation options
-var countOptions2 = {
+const countOptions2 = {
     useEasing: true, 
     useGrouping: true, 
     separator: ',', 
@@ -121,7 +121,7 @@ var countOptions2 = {
     suffix: ' GWh'
 };
 
-var countOptions1 = {
+const countOptions1 = {
     useEasing: true, 
     useGrouping: true, 
     decimal: '.',
@@ -129,56 +129,56 @@ var countOptions1 = {
 };
 
 // countUp animation 
-var count1 = new CountUp('counter1', 0, ((<%=totalMwhEmbedded%>).toFixed(1)), 1, 3, countOptions2);
+const count1 = new CountUp('counter1', 0, ((<%=totalMwhEmbedded%>).toFixed(1)), 1, 3, countOptions2);
     if (!count1.error) {
     count1.start();
     } else {
     console.error(count1.error);
 }
 
-var count2 = new CountUp('counter2', 0, ((<%=totalFossil48%>).toFixed(1)), 1, 3, countOptions2);
+const count2 = new CountUp('counter2', 0, ((<%=totalFossil48%>).toFixed(1)), 1, 3, countOptions2);
     if (!count2.error) {
     count2.start();
     } else {
     console.error(count2.error);
 }
 
-var count3 = new CountUp('counter3', 0, ((<%=renewTotalCumul%>).toFixed(1)), 1, 3, countOptions2);
+const count3 = new CountUp('counter3', 0, ((<%=renewTotalCumul%>).toFixed(1)), 1, 3, countOptions2);
     if (!count3.error) {
     count3.start();
     } else {
     console.error(count3.error);
 }
 
-var count4 = new CountUp('counter4', 0, ((<%=totalLowc48%>).toFixed(1)), 1, 3, countOptions2);
+const count4 = new CountUp('counter4', 0, ((<%=totalLowc48%>).toFixed(1)), 1, 3, countOptions2);
     if (!count4.error) {
     count4.start();
     } else {
     console.error(count4.error);
 }
 
-var count5 = new CountUp('counter5', 0, (Math.floor(((<%=totalFossil48%>)/(<%=totalMwhEmbedded%>))*100)+0.5).toFixed(1), 1, 3, countOptions1);
+const count5 = new CountUp('counter5', 0, (Math.floor(((<%=totalFossil48%>)/(<%=totalMwhEmbedded%>))*100)+0.5).toFixed(1), 1, 3, countOptions1);
     if (!count5.error) {
     count5.start();
     } else {
     console.error(count5.error);
 }
 
-var count6 = new CountUp('counter6', 0, (Math.floor(((<%=renewTotalCumul%>)/(<%=totalMwhEmbedded%>))*100)+0.5).toFixed(1), 1, 3, countOptions1);
+const count6 = new CountUp('counter6', 0, (Math.floor(((<%=renewTotalCumul%>)/(<%=totalMwhEmbedded%>))*100)+0.5).toFixed(1), 1, 3, countOptions1);
     if (!count6.error) {
     count6.start();
     } else {
     console.error(count6.error);
 }
 
-var count7 = new CountUp('counter7', 0, (Math.floor(((<%=totalLowc48%>)/(<%=totalMwhEmbedded%>))*100)+0.5).toFixed(1), 1, 3, countOptions1);
+const count7 = new CountUp('counter7', 0, (Math.floor(((<%=totalLowc48%>)/(<%=totalMwhEmbedded%>))*100)+0.5).toFixed(1), 1, 3, countOptions1);
     if (!count7.error) {
     count7.start();
     } else {
     console.error(count7.error);
 }
 
-var count8 = new CountUp('counter8', 0, 100, 1, 3, countOptions1);
+const count8 = new CountUp('counter8', 0, 100, 1, 3, countOptions1);
     if (!count8.error) {
     count8.start();
     } else {
@@ -186,10 +186,10 @@ var count8 = new CountUp('counter8', 0, 100, 1, 3, countOptions1);
 }
 
 // chart.js 
-var ctx = document.getElementById("lineChart48");
+const ctx = document.getElementById("lineChart48");
 
 // 48hr Half-hourly and Total Generation - line chart data
-var data1 = {
+const data1 = {
     labels: [<%= timePeriod %>],
     datasets: [{
         fill: true,
@@ -253,7 +253,7 @@ var data1 = {
 
 
 // line chart data options
-var line1 = {
+const line1 = {
   tooltips: {
         mode: 'index',
         intersect: false,
@@ -302,11 +302,18 @@ var line1 = {
     }
 }
 
-var lineChart48 = new Chart(ctx, {
+const lineChart48 = new Chart(ctx, {
     data: data1,
     type: 'line',
     options: line1
 });
+
+// page refresh every 30 mins
+setTimeout(() => {
+    location.reload();
+    },300000)
+
+
 
 </script>
 
