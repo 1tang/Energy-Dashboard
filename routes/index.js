@@ -3,8 +3,9 @@ const router = express.Router();
 
 router.use('/', require('./live'));
 router.use('/', require('./fourtyeight'));
+router.use('/', require('./map'));
 
-// root route
+// root route redirects to /live
 router.get('/', (req, res) => {
     res.redirect('/live');
 });

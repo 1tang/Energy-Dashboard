@@ -124,7 +124,7 @@ router.get("/live", (req, res) => {
         const solarToday = [];
 
         for(let t = 0; t < arraySolarToday.length; t++) {
-            if(arraySolarToday[t][2] == null) {
+            if(arraySolarToday[t][2] == null || NaN) {
                 arraySolarToday[t][2] = 0;
             }
             solarToday.push((arraySolarToday[t][2]) / 1000);

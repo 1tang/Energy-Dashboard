@@ -1,0 +1,473 @@
+body,
+#map {
+    width: 100%;
+    height: 100%;
+    /*padding: 0;*/
+    /*margin: auto;*/
+    padding-top: 43px;
+    z-index: 1;
+}
+
+.info {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.info h4 {
+    margin: 5px 0 5px 0;
+    color: #777;
+}
+
+.right-align {
+    float: right;
+}
+
+.ui.block.header {
+    background: #F9F9F9;
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*width: 100%;*/
+    padding: 15px 20px;
+}
+
+h2.ui.block.header {
+    color: #3d3d3d;
+}
+
+.ui.top.large.blue.inverted.fixed.menu {
+    background: #2092C8;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #2092C8, #22B5AC);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #2092C8, #22B5AC);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    z-index: 2;
+}
+
+.upper {
+    width: 80px;
+    padding: 8px 16px 8px 16px;
+}
+
+.lower {
+    width: 166px;
+    padding: 8px 16px 8px 16px;
+}
+
+#solar {
+    background-color: rgba(252, 179, 111, 0.8);
+    border: 1px solid rgba(252, 179, 111, 0.8);
+    margin: 0 6px 6px 0;
+    padding: 8px 16px 8px 16px;
+    -webkit-transition-duration: 0.1s;
+    /* Safari */
+    transition-duration: 0.1s;
+    /* font-size: 12px;
+    padding: 8px 6px;    */
+}
+
+#solar:hover {
+    border-color: grey;
+    background-color: rgba(252, 179, 111, 1);
+    color: white;
+}
+
+#solar.clicked {
+    border-color: grey;
+    background-color: rgba(252, 179, 111, 1);
+    color: white;
+    text-decoration: underline;
+}
+
+#hydro {
+    background-color: rgba(149, 159, 176, 0.8);
+    border: 1px solid rgba(149, 159, 176, 0.8);
+    padding: 8px 16px 8px 16px;
+    margin: 0 6px 6px 0;
+    -webkit-transition-duration: 0.1s;
+    /* Safari */
+    transition-duration: 0.1s;
+
+}
+
+#hydro:hover {
+    border-color: grey;
+    background-color: rgba(149, 159, 176, 1);
+    color: white;
+}
+
+#hydro.clicked {
+    border-color: grey;
+    background-color: rgba(149, 159, 176, 1);
+    color: white;
+    text-decoration: underline;
+}
+
+#onshore {
+    background-color: rgba(37, 186, 161, 0.8);
+    border: 1px solid rgba(37, 186, 161, 0.8);
+    padding: 8px 16px 8px 16px;
+    margin: 0 6px 0px 0;
+    -webkit-transition-duration: 0.1s;
+    /* Safari */
+    transition-duration: 0.1s;
+}
+
+#onshore:hover {
+    border-color: grey;
+    background-color: rgba(37, 186, 161, 1);
+    color: white;
+}
+
+#onshore.clicked {
+    border-color: grey;
+    background-color: rgba(37, 186, 161, 1);
+    color: white;
+    text-decoration: underline;
+}
+
+#offshore {
+    background-color: rgba(37, 186, 161, 0.8);
+    border: 1px solid rgba(37, 186, 161, 0.8);
+    padding: 8px 16px 8px 16px;
+    margin: 0 6px 0px 0;
+    -webkit-transition-duration: 0.1s;
+    /* Safari */
+    transition-duration: 0.1s;
+}
+
+#offshore:hover {
+    border-color: grey;
+    background-color: rgba(37, 186, 161, 1);
+    color: white;
+}
+
+#offshore.clicked {
+    border-color: grey;
+    background-color: rgba(37, 186, 161, 1);
+    color: white;
+    text-decoration: underline;
+}
+
+#biomass {
+    background-color: rgba(234, 195, 186, 0.8);
+    border: 1px solid rgba(234, 195, 186, 0.8);
+    padding: 8px 11px 8px 11px;
+    margin: 0 6px 6px 0;
+    -webkit-transition-duration: 0.1s;
+    /* Safari */
+    transition-duration: 0.1s;
+}
+
+#biomass:hover {
+    border-color: grey;
+    background-color: rgba(234, 195, 186, 1);
+    color: white;
+}
+
+#biomass.clicked {
+    border-color: grey;
+    background-color: rgb(234, 195, 186, 1);
+    color: white;
+    text-decoration: underline;
+}
+
+#marine {
+    background-color: rgba(166, 130, 123, 0.8);
+    border: 1px solid rgba(166, 130, 123, 0.8);
+    padding: 8px 11px 8px 11px;
+    margin: 0 6px 6px 0;
+    -webkit-transition-duration: 0.1s;
+    /* Safari */
+    transition-duration: 0.1s;
+}
+
+#marine:hover {
+    border-color: grey;
+    background-color: rgb(166, 130, 123, 1);
+    color: white;
+}
+
+#marine.clicked {
+    border-color: grey;
+    background-color: rgb(166, 130, 123, 1);
+    color: white;
+    text-decoration: underline;
+}
+
+#anaerobic {
+    background-color: rgba(233, 151, 146, 0.8);
+    border: 1px solid rgba(233, 151, 146, 0.8);
+    padding: 8px 12px 8px 12px;
+    margin: 0 6px 0px 0;
+    -webkit-transition-duration: 0.1s;
+    /* Safari */
+    transition-duration: 0.1s;
+}
+
+#anaerobic:hover {
+    border-color: grey;
+    background-color: rgba(233, 151, 146, 1);
+    color: white;
+}
+
+#anaerobic.clicked {
+    border-color: grey;
+    background-color: rgba(233, 151, 146, 1);
+    color: white;
+    text-decoration: underline;
+}
+
+#waste {
+    background-color: rgba(208, 194, 218, 0.8);
+    border: 1px solid rgba(208, 194, 218, 0.8);
+    padding: 8px 16px 8px 16px;
+    margin: 0 6px 6px 0;
+    -webkit-transition-duration: 0.1s;
+    /* Safari */
+    transition-duration: 0.1s;
+}
+
+#waste:hover {
+    border-color: grey;
+    background-color: rgba(208, 194, 218, 1);
+    color: white;
+}
+
+#waste.clicked {
+    border-color: grey;
+    background-color: rgba(208, 194, 218, 1);
+    color: white;
+    text-decoration: underline;
+}
+
+#coal {
+    background-color: rgba(200, 87, 83, 0.8);
+    border: 1px solid rgba(200, 87, 83, 0.8);
+    padding: 8px 16px 8px 16px;
+    margin: 0 6px 6px 0;
+    -webkit-transition-duration: 0.1s;
+    /* Safari */
+    transition-duration: 0.1s;
+}
+
+#coal:hover {
+    border-color: grey;
+    background-color: rgba(200, 87, 83, 1);
+    color: white;
+}
+
+#coal.clicked {
+    border-color: grey;
+    background-color: rgba(200, 87, 83, 1);
+    color: white;
+    text-decoration: underline;
+}
+
+#nuclear {
+    background-color: rgba(145, 95, 158, 0.8);
+    border: 1px solid rgba(145, 95, 158, 0.8);
+    padding: 8px 11px 8px 11px;
+    margin: 0 6px 6px 0;
+    -webkit-transition-duration: 0.1s;
+    /* Safari */
+    transition-duration: 0.1s;
+}
+
+#nuclear:hover {
+    border-color: grey;
+    background-color: rgba(145, 95, 158, 1);
+    color: white;
+}
+
+#nuclear.clicked {
+    border-color: grey;
+    background-color: rgba(145, 95, 158, 1);
+    color: white;
+    text-decoration: underline;
+}
+
+#gas {
+    background-color: rgba(55, 150, 201, 0.8);
+    border: 1px solid rgba(55, 150, 201, 0.8);
+    padding: 8px 16px 8px 16px;
+    margin: 0 6px 6px 0;
+    -webkit-transition-duration: 0.1s;
+    /* Safari */
+    transition-duration: 0.1s;
+}
+
+#gas:hover {
+    border-color: grey;
+    background-color: rgba(55, 150, 201, 1);
+    color: white;
+}
+
+#gas.clicked {
+    border-color: grey;
+    background-color: rgba(55, 150, 201, 1);
+    color: white;
+    text-decoration: underline;
+}
+
+#oil {
+    background-color: rgba(157, 207, 213, 0.8);
+    margin: 0 0px 6px 0;
+    border: 1px solid rgba(157, 207, 213, 0.8);
+    padding: 8px 16px 8px 16px;
+    -webkit-transition-duration: 0.1s;
+    /* Safari */
+    transition-duration: 0.1s;
+}
+
+#oil:hover {
+    border-color: grey;
+    background-color: rgba(157, 207, 213, 1);
+    color: white;
+}
+
+#oil.clicked {
+    border-color: grey;
+    background-color: rgba(157, 207, 213, 1);
+    color: white;
+    text-decoration: underline;
+}
+
+#storage {
+    background-color: rgba(254, 229, 149, 0.8);
+    border: 1px solid rgba(254, 229, 149, 0.8);
+    padding: 8px 16px 8px 16px;
+    margin: 0 6px 0px 0;
+    -webkit-transition-duration: 0.1s;
+    /* Safari */
+    transition-duration: 0.1s;
+}
+
+#storage:hover {
+    border-color: grey;
+    background-color: rgba(254, 229, 149, 1);
+    color: white;
+}
+
+#storage.clicked {
+    border-color: grey;
+    background-color: rgba(254, 229, 149, 1);
+    color: white;
+    text-decoration: underline;
+}
+
+#interconn {
+    background-color: rgba(199, 202, 141, 0.8);
+    border: 1px solid rgba(199, 202, 141, 0.8);
+    padding: 8px 16px 8px 16px;
+    margin: 0;
+    -webkit-transition-duration: 0.1s;
+    /* Safari */
+    transition-duration: 0.1s;
+}
+
+#interconn:hover {
+    border-color: grey;
+    background-color: rgba(199, 202, 141, 1);
+    color: white;
+}
+
+#interconn.clicked {
+    border-color: grey;
+    background-color: rgba(199, 202, 141, 1);
+    color: white;
+    text-decoration: underline;
+}
+
+#all {
+    background-color: rgb(202, 203, 205, 0.8);
+    border: 1px solid rgb(202, 203, 205, 0.8);
+    padding: 8px 16px 8px 16px;
+    margin: 0 6px 6px 0;
+    -webkit-transition-duration: 0.1s;
+    /* Safari */
+    transition-duration: 0.1s;
+    text-align: center;
+}
+
+#all:hover {
+    color: white;
+    background-color: rgb(202, 203, 205, 1);
+    border-color: grey;
+}
+
+#all.clicked {
+    border-color: grey;
+    background-color: rgb(202, 203, 205, 1);
+    color: white;
+    text-decoration: underline;
+}
+
+
+/*MEDIA QUERIES*/
+
+/*Mobile */
+
+@media only screen and (max-width: 991px) {
+    [class*="small-tab hidden"] {
+        display: none !important;
+    }
+}
+
+
+@media only screen and (max-width: 650px) {
+    [class*="mobile hidden"] {
+        display: none !important;
+    }
+}
+
+@media only screen and (max-width: 380px) {
+    [class*="mobile-small hidden"] {
+        display: none !important;
+    }
+}
+
+
+
+/* Tablet / iPad Portrait */
+
+/*@media only screen and (min-width: 768px) and (max-width: 991px) {*/
+
+/*}*/
+
+/* Computer / Desktop / iPad Landscape */
+
+/*@media only screen and (min-width: 992px) and (max-width: 1199px) {*/
+
+/*}*/
+
+/* Large Monitor */
+
+/*@media only screen and (min-width: 1200px) and (max-width: 1919px) {*/
+
+/*}*/
+
+/* Widescreen Monitor */
+
+/*@media only screen and (min-width: 1920px) {*/
+
+/*}*/
+
+/*footer move to bottom*/
+
+/*@media (min-height: 500px) {*/
+
+/*  .vertical.footer.segment { */
+
+/*    position: absolute;*/
+
+/*    bottom: 0;*/
+
+/*    width: 100%;*/
+
+/*  }*/
+
+/*}*/

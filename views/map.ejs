@@ -1,0 +1,441 @@
+<% include partials/header-map %> 
+
+
+<div id='map'></div>
+ 
+  <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+<script>
+
+   
+
+    var colour = L.tileLayer('https://api.mapbox.com/styles/v1/danthory/cjifra1ay3eia2rlzj058vfm1/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZGFudGhvcnkiLCJhIjoiY2ppZnBhamM3MHV5ZDNrbzY2Ym42ZzZwMCJ9.qzdzRWuLM4uv99BEappU-Q', {
+        maxZoom: 18,
+        id: 'MapID',
+        attribution: '&copy; <a href="https://www.mapbox.com/"> | Mapbox</a>  contributors'
+    });
+
+    var greyscale = L.tileLayer('https://api.mapbox.com/styles/v1/danthory/cjifqt1ev0o4h2snzzxtouk13/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZGFudGhvcnkiLCJhIjoiY2ppZnBhamM3MHV5ZDNrbzY2Ym42ZzZwMCJ9.qzdzRWuLM4uv99BEappU-Q', {
+        maxZoom: 18,
+        id: 'MapID',
+        attribution: '&copy; <a href="https://www.mapbox.com/"> | Mapbox</a>  contributors'
+    }); 
+
+      var detailed = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        id: 'MapID',
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    });     
+
+        var satellite = L.tileLayer('https://api.mapbox.com/styles/v1/danthory/cjifryve63i672rlkym8dhp3f/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZGFudGhvcnkiLCJhIjoiY2ppZnBhamM3MHV5ZDNrbzY2Ym42ZzZwMCJ9.qzdzRWuLM4uv99BEappU-Q', {
+        maxZoom: 18,
+        id: 'MapID',
+        attribution: '&copy; <a href="https://www.mapbox.com/"> | Mapbox</a>  contributors'
+    });     
+
+    function onEachFeature (feature, layer) {
+        layer.bindTooltip("<strong>"+feature.properties['Site Name'].toUpperCase()+"</strong><hr>TECHNOLOGY - <strong>"+feature.properties['Technology Type']+"</strong></br>CAPACITY (MWelec) - <strong>"+feature.properties['Installed Capacity (MWelec)']+"</strong></br>STATUS - <strong>"+feature.properties['Development Status (short)']+"</strong></br>GEN COMMENCED - <strong>"+feature.properties['Operational']+"</strong>").openTooltip();
+    }
+
+    function onEachFeatureConstr (feature, layer) {
+        layer.bindTooltip("<strong>"+feature.properties['Site Name'].toUpperCase()+"</strong><hr>TECHNOLOGY - <strong>"+feature.properties['Technology Type']+"</strong></br>CAPACITY (MWelec) - <strong>"+feature.properties['Installed Capacity (MWelec)']+"</strong></br>STATUS - <strong>"+feature.properties['Development Status (short)']+"</strong></br>CONSTR COMMENCED - <strong>"+feature.properties['Under Construction']+"</strong>").openTooltip();
+    }
+
+     function onEachFeatureAwaitConstr (feature, layer) {
+        layer.bindTooltip("<strong>"+feature.properties['Site Name'].toUpperCase()+"</strong><hr>TECHNOLOGY - <strong>"+feature.properties['Technology Type']+"</strong></br>CAPACITY (MWelec) - <strong>"+feature.properties['Installed Capacity (MWelec)']+"</strong></br>STATUS - <strong>"+feature.properties['Development Status (short)']+"</strong>").openTooltip();
+    }
+
+    function circleStyleColour(feature) {
+	    return {
+            radius: getRadius(feature.properties['Installed Capacity (MWelec)']),
+            fillColor: getColour(feature.properties['Technology Type']),
+            color: "#000",
+            weight: 1,
+            opacity: 0.6,
+            fillOpacity: 0.6
+        }
+    }
+
+    function getColour(x) {
+        return x === "Solar Photovoltaics" ? "rgba(252,179,111,1)" :
+               x === "Wind Onshore" ? "rgba(37,186,161,1)" :
+               x === "Wind Offshore" ? "rgba(37,186,161,1)" :
+               x === "Biomass (dedicated)" ? "rgba(234,195,186,1)" :
+               x === "Biomass (co-firing)" ? "rgba(234,195,186,1)" :
+               x === "Biomass Meat & Bone Meal" ? "rgba(234,195,186,1)" :
+               x === "Biomass Straw" ? "rgba(234,195,186,1)" :
+               x === "Large Hydro" ? "rgba(149,159,176,1)" :
+               x === "Small Hydro" ? "rgba(149,159,176,1)" :
+               x === "Tidal Barrage and Tidal Stream" ? "#A6827B" :
+               x === "Shoreline Wave" ? "#A6827B" :
+               x === "Anaerobic Digestion" ? "rgba(233,151,146,1)" :
+               x === "Sewage Sludge Digestion" ? "rgba(233,151,146,1)" :
+               x === "Landfill Gas" ? "rgba(208,194,218,1)" :
+               x === "EfW Incineration" ? "rgba(208,194,218,1)" :
+               x === "Advanced Conversion Technologies" ? "rgba(208,194,218,1)" :
+               x === "Coal" ? "rgba(200,87,83,1)" :
+               x === "Nuclear" ? "rgba(145,95,158,1)" :
+               x === "Gas" ? "rgba(55,150,201,1)" :
+               x === "Gas or Oil" ? "rgba(55,150,201,1)" :
+               x === "OCGT" ? "rgba(55,150,201,1)" :
+               x === "CCGT" ? "rgba(55,150,201,1)" :
+               x === "Gas oil" ? "rgba(157,207,213,1)" :
+               x === "Gas oil / kerosene" ? "rgba(157,207,213,1)" :
+               x === "Light oil" ? "rgba(157,207,213,1)" :
+               x === "Diesel" ? "rgba(157,207,213,1)" :
+               x === "Pumped storage" ? "rgba(254,229,149,1)" :
+              "black";
+    }
+
+    function getRadius(value){
+         var radius = Math.sqrt((value)/(Math.PI));
+         return radius*3
+    }
+
+    var renewablesConstr = L.geoJSON(renewDataConstr, {
+        filter:  function(feature){
+                    if(feature.properties['Development Status (short)'] === "Under Construction"){
+                        return true;
+                    }
+                },
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, circleStyleColour(feature));
+        },
+        onEachFeature: onEachFeatureConstr 
+        });
+
+    var renewablesAwaitConstr = L.geoJSON(renewDataAwaitConstr, {
+        filter:  function(feature){
+            if(feature.properties['Development Status (short)'] === "Awaiting Construction"){
+                return true;
+            }
+        },
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, circleStyleColour(feature));
+        },
+        onEachFeature: onEachFeatureAwaitConstr 
+    });
+
+    var solar = L.geoJSON(renewDataOp, {
+        filter:  function(feature){
+                    if(feature.properties['Technology Type'] === "Solar Photovoltaics"){
+                        return true;
+                    }
+                },
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, circleStyleColour(feature));
+        },
+        onEachFeature: onEachFeature
+    });
+
+    var offshore = L.geoJSON(renewDataOp, {
+        filter: function(feature){
+                    if(feature.properties['Technology Type'] === "Wind Offshore"){
+                        return true;
+                    }
+                },
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, circleStyleColour(feature));
+        },
+        onEachFeature: onEachFeature
+    });
+
+    var onshore = L.geoJSON(renewDataOp, {
+        filter:  function (feature){
+                    if(feature.properties['Technology Type'] === "Wind Onshore"){
+                        return true;
+                    }
+                },
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, circleStyleColour(feature));
+        },
+        onEachFeature: onEachFeature
+    });
+
+    var biomass = L.geoJSON(renewDataOp, {
+        filter: function (feature){
+                    if(feature.properties['Technology Type'] === "Biomass (dedicated)" || feature.properties['Technology Type'] === "Biomass (co-firing)" || feature.properties['Technology Type'] === "Biomass Meat & Bone Meal" || feature.properties['Technology Type'] === "Biomass Straw"){
+                        return true;
+                    }
+                },
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, circleStyleColour(feature));
+        },
+        onEachFeature: onEachFeature
+    });
+
+    var hydro = L.geoJSON(renewDataOp, {
+        filter: function (feature){
+                    if(feature.properties['Technology Type'] === "Large Hydro" || feature.properties['Technology Type'] === "Small Hydro"){
+                        return true;
+                    }
+                },
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, circleStyleColour(feature));
+        },
+        onEachFeature: onEachFeature
+    });
+
+    var marine = L.geoJSON(renewDataOp, {
+        filter: function (feature){
+                    if(feature.properties['Technology Type'] === "Tidal Barrage and Tidal Stream" || feature.properties['Technology Type'] === "Shoreline Wave"){
+                        return true;
+                    }
+                },
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, circleStyleColour(feature));
+        },
+        onEachFeature: onEachFeature
+    });
+
+     var anaerobic = L.geoJSON(renewDataOp, {
+        filter: function (feature){
+                    if(feature.properties['Technology Type'] === "Sewage Sludge Digestion" || feature.properties['Technology Type'] === "Anaerobic Digestion"){
+                        return true;
+                    }
+                },
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, circleStyleColour(feature));
+        },
+        onEachFeature: onEachFeature
+    });
+
+    var waste = L.geoJSON(renewDataOp, {
+        filter: function (feature){
+                    if(feature.properties['Technology Type'] === "Landfill Gas" || feature.properties['Technology Type'] === "EfW Incineration" || feature.properties['Technology Type'] === "Advanced Conversion Technologies"){
+                        return true;
+                    }
+                },
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, circleStyleColour(feature));
+        },
+        onEachFeature: onEachFeature
+    });
+
+    var coal = L.geoJSON(fossilDataOp, {
+        filter: function (feature){
+                    if(feature.properties['Technology Type'] === "Coal"){
+                        return true;
+                    }
+                },
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, circleStyleColour(feature));
+        },
+        onEachFeature: onEachFeature
+    });
+
+    var nuclear = L.geoJSON(fossilDataOp, {
+        filter: function (feature){
+                    if(feature.properties['Technology Type'] === "Nuclear"){
+                        return true;
+                    }
+                },
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, circleStyleColour(feature));
+        },
+        onEachFeature: onEachFeature
+    });
+
+    var gas = L.geoJSON(fossilDataOp, {
+        filter: function (feature){
+                    if(feature.properties['Technology Type'] === "Gas" || feature.properties['Technology Type'] === "OCGT" || feature.properties['Technology Type'] === "CCGT" || feature.properties['Technology Type'] === "Gas or Oil"){
+                        return true;
+                    }
+                },
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, circleStyleColour(feature));
+        },
+        onEachFeature: onEachFeature
+    });
+
+    var oil = L.geoJSON(fossilDataOp, {
+        filter: function (feature){
+                    if(feature.properties['Technology Type'] === "Gas oil" || feature.properties['Technology Type'] === "Gas oli / kerosene" || feature.properties['Technology Type'] === "Light oil" || feature.properties['Technology Type'] === "Diesel"){
+                        return true;
+                    }
+                },
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, circleStyleColour(feature));
+        },
+        onEachFeature: onEachFeature
+    });
+
+     var storage = L.geoJSON(fossilDataOp, {
+        filter: function (feature){
+                    if(feature.properties['Technology Type'] === "Pumped storage"){
+                        return true;
+                    }
+                },
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, circleStyleColour(feature));
+        },
+        onEachFeature: onEachFeature
+    });
+    var renewablesOp = L.layerGroup([solar, biomass, onshore, offshore, hydro, marine, anaerobic, waste]);
+    var fossilOp = L.layerGroup([coal, gas, oil, storage]);
+    var lowCOp = L.layerGroup([nuclear]);
+    var renewablesFossilOp = L.layerGroup([solar, biomass, onshore, offshore, hydro, marine, anaerobic, waste, coal, nuclear, gas, oil, storage]);
+    
+    var map = L.map('map', {
+        center: [54.246779, -3.03296], 
+        zoom: 7,
+        layers: [greyscale, renewablesFossilOp]
+    });
+
+    var baseMaps = {
+        "Default": greyscale,
+        "Colour": colour,
+        "Detailed" : detailed,
+        "Satellite" : satellite
+    };
+
+    var overlayMaps = {
+        "All Technologies (Operational)": renewablesFossilOp ,
+        "Fossil Fuels (Operational)": fossilOp,
+        "Renewables (Operational)": renewablesOp,
+        "Renewables (Under Construction)": renewablesConstr,
+        "Renewables (Awaiting Construction)": renewablesAwaitConstr,
+        "Low Carbon (Operational)": lowCOp,
+        "Solar" : solar,
+        "Offshore Wind": offshore,
+        "Onshore Wind": onshore,
+        "Biomass": biomass,
+        "Hydro": hydro,
+        "Marine": marine,
+        "Anaerobic Digestion": anaerobic,
+        "Waste": waste,
+        "Coal": coal,
+        "Nuclear": nuclear,
+        "Gas": gas,
+        "Oil": oil,
+        "Storage": storage
+    };
+// Button menu overlay
+    var overlay = L.control();
+
+    overlay.onAdd = function(map) {
+        var div = L.DomUtil.create('div', 'info small-tab hidden');
+        div.innerHTML = '<button class="tiny ui button clicked upper" id="all">ALL</button><button class="tiny ui button upper" id="solar">SOLAR</button><button class="tiny ui button upper" id="hydro">HYDRO</button><button class="tiny ui  button upper" id="biomass">BIOMASS</button></button><button class="tiny ui button upper" id="marine">MARINE</button><button class="tiny ui button upper" id="waste">WASTE</button><button class="tiny ui button upper" id="coal">COAL</button><button class="tiny ui button upper" id="nuclear">NUCLEAR</button><button class="tiny ui button upper" id="gas">GAS</button><button class="tiny ui button upper" id="oil">OIL</button><br><button class="tiny ui  button lower" id="onshore">WIND ONSHORE</button><button class="tiny ui button lower" id="offshore">WIND OFFSHORE</button><button class="tiny ui button lower" id="anaerobic">ANAEROBIC DIGESTION</button><button class="tiny ui button lower" id="storage">PUMPED STORAGE</button><button class="tiny ui button lower" id="interconn">INTERCONNECTORS</button><br><h4>Hover or click on/off to view a single technology type. <span class="right-align">Hover over map for details</span></h4>'
+        return div;
+    };
+    
+    overlay.addTo(map);
+
+    L.control.layers(baseMaps, overlayMaps, {position: 'topleft'}).addTo(map);
+        var click = function() {
+            if(!$('#'+this.id).hasClass('clicked')){
+                var tech = eval(this.id);
+                $('button').removeClass('clicked')
+                renewablesFossilOp.clearLayers();
+                renewablesFossilOp.addLayer(tech);
+                $('#'+this.id).toggleClass("clicked");
+            } else {
+                renewablesFossilOp.clearLayers();
+                renewablesFossilOp.addLayer(solar);
+                renewablesFossilOp.addLayer(biomass);
+                renewablesFossilOp.addLayer(onshore);
+                renewablesFossilOp.addLayer(offshore);
+                renewablesFossilOp.addLayer(hydro);
+                renewablesFossilOp.addLayer(marine);
+                renewablesFossilOp.addLayer(anaerobic);
+                renewablesFossilOp.addLayer(waste);
+                renewablesFossilOp.addLayer(coal);
+                renewablesFossilOp.addLayer(nuclear);
+                renewablesFossilOp.addLayer(gas);
+                renewablesFossilOp.addLayer(oil);
+                renewablesFossilOp.addLayer(storage);
+                $('#'+this.id).toggleClass("clicked");
+                $('#all').addClass('clicked');
+            }
+        }
+    
+        var clickAll = function() {
+            $('button').removeClass('clicked');
+            renewablesFossilOp.clearLayers();
+            renewablesFossilOp.addLayer(solar);
+            renewablesFossilOp.addLayer(biomass);
+            renewablesFossilOp.addLayer(onshore);
+            renewablesFossilOp.addLayer(offshore);
+            renewablesFossilOp.addLayer(hydro);
+            renewablesFossilOp.addLayer(marine);
+            renewablesFossilOp.addLayer(anaerobic);
+            renewablesFossilOp.addLayer(waste);
+            renewablesFossilOp.addLayer(coal);
+            renewablesFossilOp.addLayer(nuclear);
+            renewablesFossilOp.addLayer(gas);
+            renewablesFossilOp.addLayer(oil);
+            renewablesFossilOp.addLayer(storage);
+            $('#all').addClass('clicked');
+        }
+    
+        var mouseOn = function() {
+            if($('#all').hasClass("clicked")){
+                var tech = eval(this.id);
+                renewablesFossilOp.clearLayers();
+                renewablesFossilOp.addLayer(tech);
+            }
+        }
+    
+        var mouseOff = function() {
+            // if(!$('#'+this.id).hasClass("clicked")) {
+            if($('#all').hasClass("clicked")){
+                renewablesFossilOp.clearLayers();
+                renewablesFossilOp.addLayer(solar);
+                renewablesFossilOp.addLayer(biomass);
+                renewablesFossilOp.addLayer(onshore);
+                renewablesFossilOp.addLayer(offshore);
+                renewablesFossilOp.addLayer(hydro);
+                renewablesFossilOp.addLayer(marine);
+                renewablesFossilOp.addLayer(anaerobic);
+                renewablesFossilOp.addLayer(waste);
+                renewablesFossilOp.addLayer(coal);
+                renewablesFossilOp.addLayer(nuclear);
+                renewablesFossilOp.addLayer(gas);
+                renewablesFossilOp.addLayer(oil);
+                renewablesFossilOp.addLayer(storage);
+            }
+        }
+    
+        $('#all').click(clickAll);
+    
+        $('#solar').click(click);
+        $('#solar').hover(mouseOn, mouseOff);
+    
+        $('#hydro').click(click);
+        $('#hydro').hover(mouseOn, mouseOff);
+    
+        $('#onshore').click(click);
+        $('#onshore').hover(mouseOn, mouseOff);
+    
+        $('#offshore').click(click);
+        $('#offshore').hover(mouseOn, mouseOff);
+    
+        $('#biomass').click(click);
+        $('#biomass').hover(mouseOn, mouseOff);
+    
+        $('#marine').click(click);
+        $('#marine').hover(mouseOn, mouseOff);
+    
+        $('#anaerobic').click(click);
+        $('#anaerobic').hover(mouseOn, mouseOff);
+    
+        $('#waste').click(click);
+        $('#waste').hover(mouseOn, mouseOff);
+    
+        $('#coal').click(click);
+        $('#coal').hover(mouseOn, mouseOff);
+    
+        $('#nuclear').click(click);
+        $('#nuclear').hover(mouseOn, mouseOff);
+    
+        $('#gas').click(click);
+        $('#gas').hover(mouseOn, mouseOff);
+    
+        $('#oil').click(click);
+        $('#oil').hover(mouseOn, mouseOff);
+        
+        $('#storage').click(click);
+        $('#storage').hover(mouseOn, mouseOff);
+</script>

@@ -66,16 +66,19 @@ h3.ui.header.left.aligned {
 }
 
 
-h3.ui.header{
+h3.ui.header {
     color: #3d3d3d;
 }
 
 .ui.top.large.blue.inverted.fixed.menu {
-    background: #2092C8;  /* fallback for old browsers */
-	background: -webkit-linear-gradient(to right, #2092C8, #22B5AC);  /* Chrome 10-25, Safari 5.1-6 */
-	background: linear-gradient(to right, #2092C8, #22B5AC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #2092C8;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #2092C8, #22B5AC);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #2092C8, #22B5AC);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
-                                    
+
 .vertical.footer.segment {
     background: #4097C7;
     position: absolute;
@@ -102,8 +105,11 @@ h3.ui.header{
 }
 
 /*a.header.item {*/
+
 /*    font-family: 'Roboto', sans-serif;*/
+
 /*    font-size: 17;*/
+
 /*}*/
 
 p {
@@ -118,88 +124,95 @@ a {
 }
 
 .col-gas {
-    color: rgba(55,150,201, 1);
+    color: rgba(55, 150, 201, 1);
 }
 
 .col-coal {
-    color: rgba(200,87,83,1);
+    color: rgba(200, 87, 83, 1);
 }
 
 .col-nuclear {
-    color: rgba(145,95,158,1);
+    color: rgba(145, 95, 158, 1);
 }
 
-.col-wind{
-    color: rgba(37,186,161,1);
+.col-wind {
+    color: rgba(37, 186, 161, 1);
 }
 
-.col-biomass{
-    color: rgba(234,195,186,1);
+.col-biomass {
+    color: rgba(234, 195, 186, 1);
 }
 
-.col-imports{
-    color: rgba(199,202,141,1);
+.col-imports {
+    color: rgba(199, 202, 141, 1);
 }
 
-.col-hydro{
-    color:  rgba(149,159,176,1);
+.col-hydro {
+    color: rgba(149, 159, 176, 1);
 }
 
-.col-solar{
-    color: rgba(252,179,111,1);
+.col-solar {
+    color: rgba(252, 179, 111, 1);
 }
 
 .link-list {
     text-align: center;
 }
-                                       
+
 /*MEDIA QUERIES*/
 
- /*Mobile */
+/*Mobile */
+
 @media only screen and (max-width: 650px) {
-  [class*="mobile hidden"]{
-    display: none !important;
-  }
+    [class*="mobile hidden"] {
+        display: none !important;
+    }
 }
 
 @media only screen and (max-width: 380px) {
-  [class*="mobile-small hidden"]{
-    display: none !important;
-  }
+    [class*="mobile-small hidden"] {
+        display: none !important;
+    }
 }
 
 
 
 /* Tablet / iPad Portrait */
+
 /*@media only screen and (min-width: 768px) and (max-width: 991px) {*/
 
 /*}*/
 
-
 /* Computer / Desktop / iPad Landscape */
-/*@media only screen and (min-width: 992px) and (max-width: 1199px) {*/
-  
-/*}*/
 
+/*@media only screen and (min-width: 992px) and (max-width: 1199px) {*/
+
+/*}*/
 
 /* Large Monitor */
+
 /*@media only screen and (min-width: 1200px) and (max-width: 1919px) {*/
- 
+
 /*}*/
 
-
 /* Widescreen Monitor */
+
 /*@media only screen and (min-width: 1920px) {*/
 
 /*}*/
 
 /*footer move to bottom*/
+
 /*@media (min-height: 500px) {*/
+
 /*  .vertical.footer.segment { */
+
 /*    position: absolute;*/
+
 /*    bottom: 0;*/
+
 /*    width: 100%;*/
+
 /*  }*/
+
 /*}*/
-
-
