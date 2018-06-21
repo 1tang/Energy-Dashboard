@@ -313,7 +313,7 @@
     var overlay = L.control({position: 'topright'});
 
     overlay.onAdd = function(map) {
-        var div = L.DomUtil.create('div', 'info');
+        var div = L.DomUtil.create('div', 'info small-tab hidden');
         div.innerHTML = '<button class="tiny ui button clicked upper" id="all">ALL</button><button class="tiny ui button upper" id="solar">SOLAR</button><button class="tiny ui button upper" id="hydro">HYDRO</button><button class="tiny ui  button upper" id="biomass">BIOMASS</button></button><button class="tiny ui button upper" id="marine">MARINE</button><button class="tiny ui button upper" id="waste">WASTE</button><button class="tiny ui button upper" id="coal">COAL</button><button class="tiny ui button upper" id="nuclear">NUCLEAR</button><button class="tiny ui button upper" id="gas">GAS</button><button class="tiny ui button upper" id="oil">OIL</button><br><button class="tiny ui  button lower" id="onshore">WIND ONSHORE</button><button class="tiny ui button lower" id="offshore">WIND OFFSHORE</button><button class="tiny ui button lower" id="anaerobic">ANAEROBIC DIGESTION</button><button class="tiny ui button lower" id="storage">PUMPED STORAGE</button><button class="tiny ui button lower" id="interconn">INTERCONNECTORS</button><br><h4>Hover or click on/off to view a single technology type. <span class="right-align">Hover over map for details</span></h4>'
         return div;
     };

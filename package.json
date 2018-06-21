@@ -11,19 +11,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "async": "^2.6.0",
+    "async": "^2.6.1",
     "bluebird": "^3.5.1",
-    "body-parser": "^1.18.2",
-    "ejs": "^2.5.7",
-    "express": "^4.16.2",
-    "moment": "^2.21.0",
-    "moment-timezone": "^0.5.14",
-    "mongoose": "^5.0.9",
-    "request": "^2.83.0",
-    "semantic-ui-popup": "^2.3.1",
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "moment": "^2.22.2",
+    "moment-timezone": "^0.5.20",
+    "request": "^2.87.0",
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
-    "nodemon": "^1.17.2"
+    "nodemon": "^1.17.5"
   }
 }
