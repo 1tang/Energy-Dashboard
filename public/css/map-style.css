@@ -60,7 +60,7 @@ h2.ui.block.header {
 #solar {
     background-color: rgba(252, 179, 111, 0.8);
     border: 1px solid rgba(252, 179, 111, 0.8);
-    margin: 0 6px 6px 0;
+    margin: 0 0 6px 0;
     padding: 8px 16px 8px 16px;
     -webkit-transition-duration: 0.1s;
     /* Safari */
@@ -110,7 +110,7 @@ h2.ui.block.header {
     background-color: rgba(37, 186, 161, 0.8);
     border: 1px solid rgba(37, 186, 161, 0.8);
     padding: 8px 16px 8px 16px;
-    margin: 0 6px 0px 0;
+    margin: 0 0 6px 0;
     -webkit-transition-duration: 0.1s;
     /* Safari */
     transition-duration: 0.1s;
@@ -133,7 +133,7 @@ h2.ui.block.header {
     background-color: rgba(37, 186, 161, 0.8);
     border: 1px solid rgba(37, 186, 161, 0.8);
     padding: 8px 16px 8px 16px;
-    margin: 0 6px 0px 0;
+    margin: 0 0 6px 0;
     -webkit-transition-duration: 0.1s;
     /* Safari */
     transition-duration: 0.1s;
@@ -156,7 +156,7 @@ h2.ui.block.header {
     background-color: rgba(234, 195, 186, 0.8);
     border: 1px solid rgba(234, 195, 186, 0.8);
     padding: 8px 11px 8px 11px;
-    margin: 0 6px 6px 0;
+    margin: 0 0 6px 0;
     -webkit-transition-duration: 0.1s;
     /* Safari */
     transition-duration: 0.1s;
@@ -202,7 +202,7 @@ h2.ui.block.header {
     background-color: rgba(233, 151, 146, 0.8);
     border: 1px solid rgba(233, 151, 146, 0.8);
     padding: 8px 12px 8px 12px;
-    margin: 0 6px 0px 0;
+    margin: 0 0 6px 0;
     -webkit-transition-duration: 0.1s;
     /* Safari */
     transition-duration: 0.1s;
@@ -225,7 +225,7 @@ h2.ui.block.header {
     background-color: rgba(208, 194, 218, 0.8);
     border: 1px solid rgba(208, 194, 218, 0.8);
     padding: 8px 16px 8px 16px;
-    margin: 0 6px 6px 0;
+    margin: 0 0 6px 0;
     -webkit-transition-duration: 0.1s;
     /* Safari */
     transition-duration: 0.1s;
@@ -271,7 +271,7 @@ h2.ui.block.header {
     background-color: rgba(145, 95, 158, 0.8);
     border: 1px solid rgba(145, 95, 158, 0.8);
     padding: 8px 11px 8px 11px;
-    margin: 0 6px 6px 0;
+    margin: 0 0 6px 0;
     -webkit-transition-duration: 0.1s;
     /* Safari */
     transition-duration: 0.1s;
@@ -315,7 +315,7 @@ h2.ui.block.header {
 
 #oil {
     background-color: rgba(157, 207, 213, 0.8);
-    margin: 0 0px 6px 0;
+    margin: 0 0 6px 0;
     border: 1px solid rgba(157, 207, 213, 0.8);
     padding: 8px 16px 8px 16px;
     -webkit-transition-duration: 0.1s;
@@ -340,7 +340,7 @@ h2.ui.block.header {
     background-color: rgba(254, 229, 149, 0.8);
     border: 1px solid rgba(254, 229, 149, 0.8);
     padding: 8px 16px 8px 16px;
-    margin: 0 6px 0px 0;
+    margin: 0 0 6px 0;
     -webkit-transition-duration: 0.1s;
     /* Safari */
     transition-duration: 0.1s;
@@ -411,7 +411,7 @@ h2.ui.block.header {
 
 /*Mobile */
 
-@media only screen and (max-width: 991px) {
+@media only screen and (max-width: 768px) {
     [class*="small-tab hidden"] {
         display: none !important;
     }
