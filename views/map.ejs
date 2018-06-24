@@ -315,6 +315,7 @@
     overlay.onAdd = function(map) {
         var div = L.DomUtil.create('div', 'info small-tab hidden ');
         div.innerHTML = '<button class="tiny ui button clicked upper" id="all">ALL</button><button class="tiny ui button upper" id="solar">SOLAR</button><br><button class="tiny ui button upper" id="hydro">HYDRO</button><button class="tiny ui  button upper" id="biomass">BIOMASS</button><br></button><button class="tiny ui button upper" id="marine">MARINE</button><button class="tiny ui button upper" id="waste">WASTE</button><br><button class="tiny ui button upper" id="coal">COAL</button><button class="tiny ui button upper" id="nuclear">NUCLEAR</button><br><button class="tiny ui button upper" id="gas">GAS</button><button class="tiny ui button upper" id="oil">OIL</button><br><button class="tiny ui  button lower" id="onshore">WIND ONSHORE</button><br><button class="tiny ui button lower" id="offshore">WIND OFFSHORE</button><br><button class="tiny ui button lower" id="anaerobic">ANAEROBIC DIGESTION</button><br><button class="tiny ui button lower" id="storage">PUMPED STORAGE</button><br><button class="tiny ui button lower" id="interconn">INTERCONNECTORS</button><br><h4>Hover or click on/off</h4>'
+        return div;
     };
     
     overlay.addTo(map);
