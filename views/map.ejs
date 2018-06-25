@@ -36,6 +36,11 @@
         layer.bindTooltip("<strong>"+feature.properties['Site Name'].toUpperCase()+"</strong><hr>TECHNOLOGY - <strong>"+feature.properties['Technology Type']+"</strong></br>CAPACITY (MWelec) - <strong>"+feature.properties['Installed Capacity (MWelec)']+"</strong></br>STATUS - <strong>"+feature.properties['Development Status (short)']+"</strong></br>GEN COMMENCED - <strong>"+feature.properties['Operational']+"</strong>").openTooltip();
     }
 
+     function onEachFeatureInterconns (feature, layer) {
+        layer.bindTooltip("<strong>"+feature.properties['Operator (or Applicant)'].toUpperCase()+"</strong></br><hr>TECHNOLOGY - <strong>"+feature.properties['Technology Type']+"</strong><br>SITE - <strong>"+feature.properties['Site Name']+"</strong><br>CAPACITY (MWelec) - <strong>"+feature.properties['Installed Capacity (MWelec)']+"</strong></br>STATUS - <strong>"+feature.properties['Development Status (short)']+"</strong></br>GEN COMMENCED - <strong>"+feature.properties['Operational']+"</strong>").openTooltip();
+
+    }
+
     function onEachFeatureConstr (feature, layer) {
         layer.bindTooltip("<strong>"+feature.properties['Site Name'].toUpperCase()+"</strong><hr>TECHNOLOGY - <strong>"+feature.properties['Technology Type']+"</strong></br>CAPACITY (MWelec) - <strong>"+feature.properties['Installed Capacity (MWelec)']+"</strong></br>STATUS - <strong>"+feature.properties['Development Status (short)']+"</strong></br>CONSTR COMMENCED - <strong>"+feature.properties['Under Construction']+"</strong>").openTooltip();
     }
@@ -44,9 +49,21 @@
         layer.bindTooltip("<strong>"+feature.properties['Site Name'].toUpperCase()+"</strong><hr>TECHNOLOGY - <strong>"+feature.properties['Technology Type']+"</strong></br>CAPACITY (MWelec) - <strong>"+feature.properties['Installed Capacity (MWelec)']+"</strong></br>STATUS - <strong>"+feature.properties['Development Status (short)']+"</strong>").openTooltip();
     }
 
+
     function circleStyleColour(feature) {
 	    return {
             radius: getRadius(feature.properties['Installed Capacity (MWelec)']),
+            fillColor: getColour(feature.properties['Technology Type']),
+            color: "#000",
+            weight: 1,
+            opacity: 0.6,
+            fillOpacity: 0.6
+        }
+    }
+
+    function circleStyleColourInterconns(feature) {
+	    return {
+            radius: 5,
             fillColor: getColour(feature.properties['Technology Type']),
             color: "#000",
             weight: 1,
@@ -83,6 +100,7 @@
                x === "Light oil" ? "rgba(157,207,213,1)" :
                x === "Diesel" ? "rgba(157,207,213,1)" :
                x === "Pumped storage" ? "rgba(254,229,149,1)" :
+               x === "Interconnector" ? "rgba(199, 202, 141, 1)" :
               "black";
     }
 
@@ -270,10 +288,33 @@
         },
         onEachFeature: onEachFeature
     });
+
+    var interconns = L.geoJSON(interConnData, {
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, circleStyleColourInterconns(feature));
+        },
+        // style: function (feature) {
+        //     L.polyline(latlngs, {color: 'red'}).addTo(map);
+        // },
+        onEachFeature: onEachFeatureInterconns
+    });
+
+    var latlngs = [
+    [0.716667, 51.44],
+    [4.021389, 51.9575]
+
+    var firstpolyline = new L.Polyline(latlngs, {
+        color: 'red',
+        weight: 3,
+        opacity: 0.5,
+        smoothFactor: 1
+    });
+    firstpolyline.addTo(map);
+
     var renewablesOp = L.layerGroup([solar, biomass, onshore, offshore, hydro, marine, anaerobic, waste]);
-    var fossilOp = L.layerGroup([coal, gas, oil, storage]);
+    var fossilOp = L.layerGroup([coal, gas, oil, storage, interconns]);
     var lowCOp = L.layerGroup([nuclear]);
-    var renewablesFossilOp = L.layerGroup([solar, biomass, onshore, offshore, hydro, marine, anaerobic, waste, coal, nuclear, gas, oil, storage]);
+    var renewablesFossilOp = L.layerGroup([solar, biomass, onshore, offshore, hydro, marine, anaerobic, waste, coal, nuclear, gas, oil, storage, interconns]);
     
     var map = L.map('map', {
         center: [54.246779, -3.03296], 
@@ -307,14 +348,15 @@
         "Nuclear": nuclear,
         "Gas": gas,
         "Oil": oil,
-        "Storage": storage
+        "Storage": storage,
+        "Interconnectors": interconns
     };
-// Button menu overlay
+    // Button menu overlay
     var overlay = L.control({position: 'topright'});
 
     overlay.onAdd = function(map) {
         var div = L.DomUtil.create('div', 'info small-tab hidden ');
-        div.innerHTML = '<button class="tiny ui button clicked upper" id="all">ALL</button><button class="tiny ui button upper" id="solar">SOLAR</button><br><button class="tiny ui button upper" id="hydro">HYDRO</button><button class="tiny ui  button upper" id="biomass">BIOMASS</button><br></button><button class="tiny ui button upper" id="marine">MARINE</button><button class="tiny ui button upper" id="waste">WASTE</button><br><button class="tiny ui button upper" id="coal">COAL</button><button class="tiny ui button upper" id="nuclear">NUCLEAR</button><br><button class="tiny ui button upper" id="gas">GAS</button><button class="tiny ui button upper" id="oil">OIL</button><br><button class="tiny ui  button lower" id="onshore">WIND ONSHORE</button><br><button class="tiny ui button lower" id="offshore">WIND OFFSHORE</button><br><button class="tiny ui button lower" id="anaerobic">ANAEROBIC DIGESTION</button><br><button class="tiny ui button lower" id="storage">PUMPED STORAGE</button><br><button class="tiny ui button lower" id="interconn">INTERCONNECTORS</button><br><h4>Hover or click on/off</h4>'
+        div.innerHTML = '<button class="tiny ui button clicked upper" id="all">ALL</button><button class="tiny ui button upper" id="solar">SOLAR</button><br><button class="tiny ui button upper" id="hydro">HYDRO</button><button class="tiny ui  button upper" id="biomass">BIOMASS</button><br></button><button class="tiny ui button upper" id="marine">MARINE</button><button class="tiny ui button upper" id="waste">WASTE</button><br><button class="tiny ui button upper" id="coal">COAL</button><button class="tiny ui button upper" id="nuclear">NUCLEAR</button><br><button class="tiny ui button upper" id="gas">GAS</button><button class="tiny ui button upper" id="oil">OIL</button><br><button class="tiny ui  button lower" id="onshore">WIND ONSHORE</button><br><button class="tiny ui button lower" id="offshore">WIND OFFSHORE</button><br><button class="tiny ui button lower" id="anaerobic">ANAEROBIC DIGESTION</button><br><button class="tiny ui button lower" id="storage">PUMPED STORAGE</button><br><button class="tiny ui button lower" id="interconns">INTERCONNECTORS</button><br><h4>Hover or click on/off</h4>'
         return div;
     };
     
@@ -343,13 +385,43 @@
                 renewablesFossilOp.addLayer(gas);
                 renewablesFossilOp.addLayer(oil);
                 renewablesFossilOp.addLayer(storage);
+                renewablesFossilOp.addLayer(interconns);
                 $('#'+this.id).toggleClass("clicked");
                 $('#all').addClass('clicked');
             }
         }
     
-        var clickAll = function() {
-            $('button').removeClass('clicked');
+    var clickAll = function() {
+        $('button').removeClass('clicked');
+        renewablesFossilOp.clearLayers();
+        renewablesFossilOp.addLayer(solar);
+        renewablesFossilOp.addLayer(biomass);
+        renewablesFossilOp.addLayer(onshore);
+        renewablesFossilOp.addLayer(offshore);
+        renewablesFossilOp.addLayer(hydro);
+        renewablesFossilOp.addLayer(marine);
+        renewablesFossilOp.addLayer(anaerobic);
+        renewablesFossilOp.addLayer(waste);
+        renewablesFossilOp.addLayer(coal);
+        renewablesFossilOp.addLayer(nuclear);
+        renewablesFossilOp.addLayer(gas);
+        renewablesFossilOp.addLayer(oil);
+        renewablesFossilOp.addLayer(storage);
+        renewablesFossilOp.addLayer(interconns);
+        $('#all').addClass('clicked');
+    }
+
+    var mouseOn = function() {
+        if($('#all').hasClass("clicked")){
+            var tech = eval(this.id);
+            renewablesFossilOp.clearLayers();
+            renewablesFossilOp.addLayer(tech);
+        }
+    }
+
+    var mouseOff = function() {
+        // if(!$('#'+this.id).hasClass("clicked")) {
+        if($('#all').hasClass("clicked")){
             renewablesFossilOp.clearLayers();
             renewablesFossilOp.addLayer(solar);
             renewablesFossilOp.addLayer(biomass);
@@ -364,75 +436,51 @@
             renewablesFossilOp.addLayer(gas);
             renewablesFossilOp.addLayer(oil);
             renewablesFossilOp.addLayer(storage);
-            $('#all').addClass('clicked');
+            renewablesFossilOp.addLayer(interconns);
         }
+    }
+
+    $('#all').click(clickAll);
+
+    $('#solar').click(click);
+    $('#solar').hover(mouseOn, mouseOff);
+
+    $('#hydro').click(click);
+    $('#hydro').hover(mouseOn, mouseOff);
+
+    $('#onshore').click(click);
+    $('#onshore').hover(mouseOn, mouseOff);
+
+    $('#offshore').click(click);
+    $('#offshore').hover(mouseOn, mouseOff);
+
+    $('#biomass').click(click);
+    $('#biomass').hover(mouseOn, mouseOff);
+
+    $('#marine').click(click);
+    $('#marine').hover(mouseOn, mouseOff);
+
+    $('#anaerobic').click(click);
+    $('#anaerobic').hover(mouseOn, mouseOff);
+
+    $('#waste').click(click);
+    $('#waste').hover(mouseOn, mouseOff);
+
+    $('#coal').click(click);
+    $('#coal').hover(mouseOn, mouseOff);
+
+    $('#nuclear').click(click);
+    $('#nuclear').hover(mouseOn, mouseOff);
+
+    $('#gas').click(click);
+    $('#gas').hover(mouseOn, mouseOff);
+
+    $('#oil').click(click);
+    $('#oil').hover(mouseOn, mouseOff);
     
-        var mouseOn = function() {
-            if($('#all').hasClass("clicked")){
-                var tech = eval(this.id);
-                renewablesFossilOp.clearLayers();
-                renewablesFossilOp.addLayer(tech);
-            }
-        }
-    
-        var mouseOff = function() {
-            // if(!$('#'+this.id).hasClass("clicked")) {
-            if($('#all').hasClass("clicked")){
-                renewablesFossilOp.clearLayers();
-                renewablesFossilOp.addLayer(solar);
-                renewablesFossilOp.addLayer(biomass);
-                renewablesFossilOp.addLayer(onshore);
-                renewablesFossilOp.addLayer(offshore);
-                renewablesFossilOp.addLayer(hydro);
-                renewablesFossilOp.addLayer(marine);
-                renewablesFossilOp.addLayer(anaerobic);
-                renewablesFossilOp.addLayer(waste);
-                renewablesFossilOp.addLayer(coal);
-                renewablesFossilOp.addLayer(nuclear);
-                renewablesFossilOp.addLayer(gas);
-                renewablesFossilOp.addLayer(oil);
-                renewablesFossilOp.addLayer(storage);
-            }
-        }
-    
-        $('#all').click(clickAll);
-    
-        $('#solar').click(click);
-        $('#solar').hover(mouseOn, mouseOff);
-    
-        $('#hydro').click(click);
-        $('#hydro').hover(mouseOn, mouseOff);
-    
-        $('#onshore').click(click);
-        $('#onshore').hover(mouseOn, mouseOff);
-    
-        $('#offshore').click(click);
-        $('#offshore').hover(mouseOn, mouseOff);
-    
-        $('#biomass').click(click);
-        $('#biomass').hover(mouseOn, mouseOff);
-    
-        $('#marine').click(click);
-        $('#marine').hover(mouseOn, mouseOff);
-    
-        $('#anaerobic').click(click);
-        $('#anaerobic').hover(mouseOn, mouseOff);
-    
-        $('#waste').click(click);
-        $('#waste').hover(mouseOn, mouseOff);
-    
-        $('#coal').click(click);
-        $('#coal').hover(mouseOn, mouseOff);
-    
-        $('#nuclear').click(click);
-        $('#nuclear').hover(mouseOn, mouseOff);
-    
-        $('#gas').click(click);
-        $('#gas').hover(mouseOn, mouseOff);
-    
-        $('#oil').click(click);
-        $('#oil').hover(mouseOn, mouseOff);
-        
-        $('#storage').click(click);
-        $('#storage').hover(mouseOn, mouseOff);
+    $('#storage').click(click);
+    $('#storage').hover(mouseOn, mouseOff);
+
+    $('#interconns').click(click);
+    $('#interconns').hover(mouseOn, mouseOff);
 </script>

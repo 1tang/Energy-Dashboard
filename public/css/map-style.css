@@ -359,7 +359,7 @@ h2.ui.block.header {
     text-decoration: underline;
 }
 
-#interconn {
+#interconns {
     background-color: rgba(199, 202, 141, 0.8);
     border: 1px solid rgba(199, 202, 141, 0.8);
     padding: 8px 16px 8px 16px;
@@ -369,13 +369,13 @@ h2.ui.block.header {
     transition-duration: 0.1s;
 }
 
-#interconn:hover {
+#interconns:hover {
     border-color: grey;
     background-color: rgba(199, 202, 141, 1);
     color: white;
 }
 
-#interconn.clicked {
+#interconns.clicked {
     border-color: grey;
     background-color: rgba(199, 202, 141, 1);
     color: white;
