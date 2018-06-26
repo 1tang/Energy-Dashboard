@@ -6,6 +6,9 @@ body {
     height: 100%;
     min-height: 100%;
 }
+div#counter1.value.stat {
+    font-size: 10px;
+}
 
 .canvas-container {
     background: white;
@@ -48,9 +51,11 @@ body {
     color: #525252;
 }
 
-div.ui.basic.segment.notchart {
-    margin: 0;
-    padding: 14px 14px 0px 14px;
+
+div.ui.basic.segment.notChart {
+    
+
+    padding: 14px 5px 14px 5px;
 }
 
 h2.ui.block.header {
@@ -89,6 +94,22 @@ h3.ui.header {
 
 .sixteen.wide.mobile.seven.wide.tablet.seven.wide.computer.column.canvas-container {
     padding: 0;
+}
+
+.sixteen.wide.mobile.nine.wide.tablet.nine.wide.computer.column.canvas-container {
+    padding: 0;
+}
+
+.sixteen.wide.mobile.five.wide.tablet.five.wide.computer.column.canvas-container {
+    padding: 0;
+}
+
+.sixteen.wide.mobile.eleven.wide.tablet.eleven.wide.computer.column.canvas-container {
+    padding: 0;
+}
+
+.four.wide.computer.eight.wide.tablet.sixteen.wide.mobile.column {
+    padding: 14px;
 }
 
 .ui.block.header {
