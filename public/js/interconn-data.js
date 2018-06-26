@@ -1,12 +1,13 @@
 var interConnData = {
     "type": "FeatureCollection",
     "features": [
-    { "type": "Feature", "properties": { "Operator (or Applicant)": "Britned", "Site Name": "Grain Static Inverter", "Technology Type": "Interconnector", "Installed Capacity (MWelec)": "1000.00", "Operational": "2009", "Region": "Southeast", "Development Status (short)": "Operational" }, "geometry": { "type": "Point", "coordinates": [ 0.716667, 51.44] } },
-    { "type": "Feature", "properties": { "Operator (or Applicant)": "Britned", "Site Name": "Maasvlakte Static Inverter", "Technology Type": "Interconnector", "Installed Capacity (MWelec)": "1000.00", "Operational": "2009", "Region": "Holland", "Development Status (short)": "Operational" }, "geometry": { "type": "Point", "coordinates": [ 4.021389, 51.9575] } }
+    { "type": "Feature", "properties": { "Operator (or Applicant)": "Britned (Holland)", "Site Name": "Grain Static Inverter", "Site Name": "Sellindge converter", "Technology Type": "Interconnector", "Installed Capacity (MWelec)": "1000.00", "Operational": "2009", "Region": "Southeast", "Development Status (short)": "Operational" }, "geometry": { "type": "Point", "coordinates": [0.716667, 51.44] } },
+    { "type": "Feature", "properties": { "Operator (or Applicant)": "Britned (Holland)", "Site Name": "Maasvlakte Static Inverter", "Technology Type": "Interconnector", "Installed Capacity (MWelec)": "1000.00", "Operational": "2009", "Region": "Holland", "Development Status (short)": "Operational" }, "geometry": { "type": "Point", "coordinates": [4.021389, 51.9575] } },
+    { "type": "Feature", "properties": { "Operator (or Applicant)": "HVDC Cross-Channel (France)", "Site Name": "Les Mandarins converter ", "Technology Type": "Interconnector", "Installed Capacity (MWelec)": "2000.00", "Operational": "1986", "Region": "France", "Development Status (short)": "Operational" }, "geometry": { "type": "Point", "coordinates": [1.784722, 50.903056] } },
+    { "type": "Feature", "properties": { "Operator (or Applicant)": "HVDC Cross-Channel (France)", "Site Name": "Sellindge converter", "Technology Type": "Interconnector", "Installed Capacity (MWelec)": "2000.00", "Operational": "1986", "Region": "Southeast", "Development Status (short)": "Operational" }, "geometry": { "type": "Point", "coordinates": [0.975556, 51.105833] } },
+    { "type": "Feature", "properties": { "Operator (or Applicant)": "East–West (Ireland)", "Site Name": "Shotton Static Inverter", "Technology Type": "Interconnector", "Installed Capacity (MWelec)": "500.00", "Operational": "2012", "Region": "Southeast", "Development Status (short)": "Operational" }, "geometry": { "type": "Point", "coordinates": [-3.072778, 53.227222] } },
+    { "type": "Feature", "properties": { "Operator (or Applicant)": "East–West (Ireland)", "Site Name": "Woodland Static Inverter", "Technology Type": "Interconnector", "Installed Capacity (MWelec)": "500.00", "Operational": "2012", "Region": "Southeast", "Development Status (short)": "Operational" }, "geometry": { "type": "Point", "coordinates": [-6.5675, 53.471111] } },
+    { "type": "Feature", "properties": { "Operator (or Applicant)": "HVDC Moyle (N. Ireland)", "Site Name": "Auchencrosh convertor", "Technology Type": "Interconnector", "Installed Capacity (MWelec)": "500.00", "Operational": "2001", "Region": "Scotland", "Development Status (short)": "Operational" }, "geometry": { "type": "Point", "coordinates": [-4.980556, 55.069444] } },
+    { "type": "Feature", "properties": { "Operator (or Applicant)": "HVDC Moyle (N. Ireland)", "Site Name": "Ballycronan More convertor", "Technology Type": "Interconnector", "Installed Capacity (MWelec)": "500.00", "Operational": "2001", "Region": "Northern Ireland", "Development Status (short)": "Operational" }, "geometry": { "type": "Point", "coordinates": [-5.769722, 54.842778] } }
     ]
 }  
-
-var latlngs = [
-    [0.716667, 51.44],
-    [4.021389, 51.9575]
-]

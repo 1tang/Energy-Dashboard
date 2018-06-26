@@ -36,11 +36,6 @@
         layer.bindTooltip("<strong>"+feature.properties['Site Name'].toUpperCase()+"</strong><hr>TECHNOLOGY - <strong>"+feature.properties['Technology Type']+"</strong></br>CAPACITY (MWelec) - <strong>"+feature.properties['Installed Capacity (MWelec)']+"</strong></br>STATUS - <strong>"+feature.properties['Development Status (short)']+"</strong></br>GEN COMMENCED - <strong>"+feature.properties['Operational']+"</strong>").openTooltip();
     }
 
-     function onEachFeatureInterconns (feature, layer) {
-        layer.bindTooltip("<strong>"+feature.properties['Operator (or Applicant)'].toUpperCase()+"</strong></br><hr>TECHNOLOGY - <strong>"+feature.properties['Technology Type']+"</strong><br>SITE - <strong>"+feature.properties['Site Name']+"</strong><br>CAPACITY (MWelec) - <strong>"+feature.properties['Installed Capacity (MWelec)']+"</strong></br>STATUS - <strong>"+feature.properties['Development Status (short)']+"</strong></br>GEN COMMENCED - <strong>"+feature.properties['Operational']+"</strong>").openTooltip();
-
-    }
-
     function onEachFeatureConstr (feature, layer) {
         layer.bindTooltip("<strong>"+feature.properties['Site Name'].toUpperCase()+"</strong><hr>TECHNOLOGY - <strong>"+feature.properties['Technology Type']+"</strong></br>CAPACITY (MWelec) - <strong>"+feature.properties['Installed Capacity (MWelec)']+"</strong></br>STATUS - <strong>"+feature.properties['Development Status (short)']+"</strong></br>CONSTR COMMENCED - <strong>"+feature.properties['Under Construction']+"</strong>").openTooltip();
     }
@@ -49,6 +44,10 @@
         layer.bindTooltip("<strong>"+feature.properties['Site Name'].toUpperCase()+"</strong><hr>TECHNOLOGY - <strong>"+feature.properties['Technology Type']+"</strong></br>CAPACITY (MWelec) - <strong>"+feature.properties['Installed Capacity (MWelec)']+"</strong></br>STATUS - <strong>"+feature.properties['Development Status (short)']+"</strong>").openTooltip();
     }
 
+    function onEachFeatureInterconns (feature, layer) {
+        layer.bindTooltip("<strong>"+feature.properties['Operator (or Applicant)'].toUpperCase()+"</strong></br><hr>TECHNOLOGY - <strong>"+feature.properties['Technology Type']+"</strong><br>SITE - <strong>"+feature.properties['Site Name']+"</strong><br>CAPACITY (MWelec) - <strong>"+feature.properties['Installed Capacity (MWelec)']+"</strong></br>STATUS - <strong>"+feature.properties['Development Status (short)']+"</strong></br>GEN COMMENCED - <strong>"+feature.properties['Operational']+"</strong>").openTooltip();
+
+    }
 
     function circleStyleColour(feature) {
 	    return {
@@ -63,7 +62,7 @@
 
     function circleStyleColourInterconns(feature) {
 	    return {
-            radius: 5,
+            radius: 7,
             fillColor: getColour(feature.properties['Technology Type']),
             color: "#000",
             weight: 1,
@@ -106,7 +105,7 @@
 
     function getRadius(value){
          var radius = Math.sqrt((value)/(Math.PI));
-         return radius*3
+         return radius*2.5
     }
 
     var renewablesConstr = L.geoJSON(renewDataConstr, {
@@ -296,30 +295,46 @@
         onEachFeature: onEachFeatureInterconns
     });
 
-    // var latlngs = [
-    // [0.716667, 51.44],
-    // [4.021389, 51.9575]
-
-   //Define an array of Latlng objects (points along the line)
-   var polylinePoints = [
+   //Define an array of Latlng coordinates for interconnectors
+    var polylinePoints = {
+        britNed: [
             [51.44, 0.716667],
-            [51.9575, 4.021389],
-         ];
+            [51.9575, 4.021389]
+        ],
+        french: [
+            [50.903056, 1.784722],
+            [51.105833, 0.975556]
+        ], 
+        irish: [
+            [53.227222, -3.072778],
+            [53.471111, -6.5675]
+        ],
+        nirish: [
+            [55.069444, -4.980556],
+            [54.842778, -5.769722]
+        ]
+        };
+
+        //  [interConnData.features[0].geometry.coordinates],
+        //     [interConnData.features[1].geometry.coordinates]
          
-         var polylineOptions = {
-               color: 'blue',
-               weight: 6,
-               opacity: 0.9
-             };
+    var polylineOptions = {
+        color: 'rgba(199, 202, 141, 1)',
+        weight: 6,
+        opacity: 0.8,
+        onEachFeature: onEachFeatureInterconns
+        };
 
-         var polyline = new L.Polyline(polylinePoints, polylineOptions);
-
-        //  map.addLayer(polyline); 
+    var polylineBritNed = new L.Polyline(polylinePoints.britNed, polylineOptions);
+    var polylineFrench = new L.Polyline(polylinePoints.french, polylineOptions);
+    var polylineIrish= new L.Polyline(polylinePoints.irish, polylineOptions);
+    var polylineNirish= new L.Polyline(polylinePoints.nirish, polylineOptions);
+    var interconnsAll = L.layerGroup([polylineBritNed, polylineFrench, polylineIrish, polylineNirish, interconns]);
 
     var renewablesOp = L.layerGroup([solar, biomass, onshore, offshore, hydro, marine, anaerobic, waste]);
-    var fossilOp = L.layerGroup([coal, gas, oil, storage, interconns]);
+    var fossilOp = L.layerGroup([coal, gas, oil, storage, interconnsAll]);
     var lowCOp = L.layerGroup([nuclear]);
-    var renewablesFossilOp = L.layerGroup([solar, biomass, onshore, offshore, hydro, marine, anaerobic, waste, coal, nuclear, gas, oil, storage, interconns, polyline]);
+    var renewablesFossilOp = L.layerGroup([solar, biomass, onshore, offshore, hydro, marine, anaerobic, waste, coal, nuclear, gas, oil, storage, interconnsAll]);
     
     var map = L.map('map', {
         center: [54.246779, -3.03296], 
@@ -338,23 +353,23 @@
         "All Technologies (Operational)": renewablesFossilOp ,
         "Fossil Fuels (Operational)": fossilOp,
         "Renewables (Operational)": renewablesOp,
+        "Low Carbon (Operational)": lowCOp,
         "Renewables (Under Construction)": renewablesConstr,
         "Renewables (Awaiting Construction)": renewablesAwaitConstr,
-        "Low Carbon (Operational)": lowCOp,
-        "Solar" : solar,
-        "Offshore Wind": offshore,
-        "Onshore Wind": onshore,
-        "Biomass": biomass,
-        "Hydro": hydro,
-        "Marine": marine,
-        "Anaerobic Digestion": anaerobic,
-        "Waste": waste,
-        "Coal": coal,
-        "Nuclear": nuclear,
-        "Gas": gas,
-        "Oil": oil,
-        "Storage": storage,
-        "Interconnectors": interconns
+        // "Solar" : solar,
+        // "Offshore Wind": offshore,
+        // "Onshore Wind": onshore,
+        // "Biomass": biomass,
+        // "Hydro": hydro,
+        // "Marine": marine,
+        // "Anaerobic Digestion": anaerobic,
+        // "Waste": waste,
+        // "Coal": coal,
+        // "Nuclear": nuclear,
+        // "Gas": gas,
+        // "Oil": oil,
+        // "Storage": storage,
+        // "Interconnectors": interconnsAll
     };
     // Button menu overlay
     var overlay = L.control({position: 'topright'});
@@ -368,34 +383,39 @@
     overlay.addTo(map);
 
     L.control.layers(baseMaps, overlayMaps, {position: 'topleft'}).addTo(map);
-        var click = function() {
-            if(!$('#'+this.id).hasClass('clicked')){
-                var tech = eval(this.id);
-                $('button').removeClass('clicked')
-                renewablesFossilOp.clearLayers();
-                renewablesFossilOp.addLayer(tech);
-                $('#'+this.id).toggleClass("clicked");
-            } else {
-                renewablesFossilOp.clearLayers();
-                renewablesFossilOp.addLayer(solar);
-                renewablesFossilOp.addLayer(biomass);
-                renewablesFossilOp.addLayer(onshore);
-                renewablesFossilOp.addLayer(offshore);
-                renewablesFossilOp.addLayer(hydro);
-                renewablesFossilOp.addLayer(marine);
-                renewablesFossilOp.addLayer(anaerobic);
-                renewablesFossilOp.addLayer(waste);
-                renewablesFossilOp.addLayer(coal);
-                renewablesFossilOp.addLayer(nuclear);
-                renewablesFossilOp.addLayer(gas);
-                renewablesFossilOp.addLayer(oil);
-                renewablesFossilOp.addLayer(storage);
-                renewablesFossilOp.addLayer(interconns);
-                renewablesFossilOp.addLayer(polyline);
-                $('#'+this.id).toggleClass("clicked");
-                $('#all').addClass('clicked');
-            }
+    
+    var click = function() {
+         if((!$('#'+this.id).hasClass('clicked')) && (!$('#'+this.id).is('#interconns'))){
+            var tech = eval(this.id);
+            $('button').removeClass('clicked')
+            renewablesFossilOp.clearLayers();
+            renewablesFossilOp.addLayer(tech);
+            $('#'+this.id).toggleClass("clicked");
+        } else if($('#'+this.id).is('#interconns') && !$('#'+this.id).hasClass('clicked')){
+            $('button').removeClass('clicked')
+            renewablesFossilOp.clearLayers();
+            renewablesFossilOp.addLayer(interconnsAll);
+            $('#interconns').toggleClass("clicked");
+        } else {
+            renewablesFossilOp.clearLayers();
+            renewablesFossilOp.addLayer(solar);
+            renewablesFossilOp.addLayer(biomass);
+            renewablesFossilOp.addLayer(onshore);
+            renewablesFossilOp.addLayer(offshore);
+            renewablesFossilOp.addLayer(hydro);
+            renewablesFossilOp.addLayer(marine);
+            renewablesFossilOp.addLayer(anaerobic);
+            renewablesFossilOp.addLayer(waste);
+            renewablesFossilOp.addLayer(coal);
+            renewablesFossilOp.addLayer(nuclear);
+            renewablesFossilOp.addLayer(gas);
+            renewablesFossilOp.addLayer(oil);
+            renewablesFossilOp.addLayer(storage);
+            renewablesFossilOp.addLayer(interconnsAll);
+            $('#'+this.id).toggleClass("clicked");
+            $('#all').addClass('clicked');
         }
+    }
     
     var clickAll = function() {
         $('button').removeClass('clicked');
@@ -413,16 +433,18 @@
         renewablesFossilOp.addLayer(gas);
         renewablesFossilOp.addLayer(oil);
         renewablesFossilOp.addLayer(storage);
-        renewablesFossilOp.addLayer(interconns);
-        renewablesFossilOp.addLayer(polyline);
+        renewablesFossilOp.addLayer(interconnsAll);
         $('#all').addClass('clicked');
     }
 
     var mouseOn = function() {
-        if($('#all').hasClass("clicked")){
+        if($('#all').hasClass("clicked") && !$('#'+this.id).is('#interconns')){
             var tech = eval(this.id);
             renewablesFossilOp.clearLayers();
             renewablesFossilOp.addLayer(tech);
+        } else if ($('#all').hasClass("clicked") && $('#'+this.id).is('#interconns')){
+            renewablesFossilOp.clearLayers();
+            renewablesFossilOp.addLayer(interconnsAll);
         }
     }
 
@@ -443,8 +465,7 @@
             renewablesFossilOp.addLayer(gas);
             renewablesFossilOp.addLayer(oil);
             renewablesFossilOp.addLayer(storage);
-            renewablesFossilOp.addLayer(interconns);
-            renewablesFossilOp.addLayer(polyline);
+            renewablesFossilOp.addLayer(interconnsAll);
         }
     }
 
