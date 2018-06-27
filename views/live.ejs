@@ -584,26 +584,30 @@ const line1 = {
     }
 }
 
-//doughnut
-const donutChart = new Chart(ctx, {
+//doughnut 
+// **use var not const otherwise causes errors on tablet if variable name and id are the same within page**
+var donutChart = new Chart(ctx, {
     data: data1,
     type: 'doughnut',
     options: doughnut
 });
-// bar chart
-const stackedBarChart  = new Chart(ctx1, {
+// bar chart 
+// **use var not const otherwise causes errors on tablet if variable name and id are the same within page**
+var stackedBarChart  = new Chart(ctx1, {
     data: data2,
     type: 'bar',
     options: bar
 });
 // line chart - Half-hourly and Total Generation
-const lineChartToday = new Chart(ctx2, {
+// **use var not const otherwise causes errors on tablet if variable name and id are the same within page**
+var lineChartToday = new Chart(ctx2, {
     data: data3,
     type: 'line',
     options: line1
 });
 // - line chart - Demand Vs Generation
-const lineChartDemand = new Chart(ctx3, {
+// **use var not const otherwise causes errors on tablet if variable name and id are the same within page**
+var lineChartDemand = new Chart(ctx3, {
     type: 'bar',
     data: data4,
     options: {

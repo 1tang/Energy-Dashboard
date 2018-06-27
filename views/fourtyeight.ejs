@@ -305,8 +305,8 @@ const line1 = {
         }]
     }
 }
-
-const lineChart48 = new Chart(ctx, {
+// **use var not const otherwise causes errors on tablet if variable name and id are the same within page**
+var lineChart48 = new Chart(ctx, {
     data: data1,
     type: 'line',
     options: line1
