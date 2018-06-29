@@ -37,74 +37,84 @@
 
 <body>
   
-  <!--navbar-->
-  <div class="ui top large blue inverted fixed menu">
-    <!--dropdown-->
-    <div class="ui dropdown icon item">
-      <i class="bars icon"></i>
-      <div class="menu">
-        <div class="item">
-          <i class="dropdown icon"></i>
-          <span class="text">Dashboards</span>
-          <div class="menu">
-            <a class="item" href="/">Electricity - Live</a>
-            <a class="item" href="/fourtyeight">Electricity - 48 Hours</a>
-          </div>
-          </div>
-          <a class="item" href="/map">
-            Electricity Map
-          </a>
-          <a class="item" href="/about">
-            About
-          </a>
-          <a class="item" href="/contact">
-            Contact
-          </a>
-          <a class="item" href="/data">
-            Data Sources
-          </a>
-          <div class="divider"></div>
-          <a class="item" href="https://www.bmreports.com/bmrs/?q=help/about-us" target="_blank">
-            BM Reports
-          </a>
-          <a class="item" href="https://www.solar.sheffield.ac.uk/pvlive/" target="_blank">
-            Sheffield University
-          </a>
-          <a class="item" href="https://www.nationalgrid.com/uk/electricity/market-operations-and-data/data-explorer" target="_blank">
-            National Grid
-          </a>
-          <a class="item" href="http://www.renewableuk.com/page/UKWEDhome" target="_blank">
-            Renewable UK
-          </a>
+ <!--navbar-->
+ <div class="ui top large blue inverted fixed menu">
+  <!--dropdown-->
+  <div class="ui dropdown icon item">
+    <i class="bars icon"></i>
+    <div class="menu">
+      <div class="item">
+        <i class="dropdown icon"></i>
+        <span class="text">Dashboards</span>
+        <div class="menu">
+          <a class="item" href="/">Electricity - Live</a>
+          <a class="item" href="/fourtyeight">Electricity - 48 Hours</a>
         </div>
+        </div>
+        <a class="item" href="/map">
+          Electricity Map
+        </a>
+        <a class="item" href="/about">
+          About
+        </a>
+        <a class="item" href="/contact">
+          Contact
+        </a>
+        <a class="item" href="/data">
+          Data Sources
+        </a>
+        <div class="divider"></div>
+        <a class="item" href="https://www.bmreports.com/bmrs/?q=help/about-us" target="_blank">
+          BM Reports
+        </a>
+        <a class="item" href="https://www.solar.sheffield.ac.uk/pvlive/" target="_blank">
+          Sheffield University
+        </a>
+        <a class="item" href="https://www.nationalgrid.com/uk/electricity/market-operations-and-data/data-explorer" target="_blank">
+          National Grid
+        </a>
+        <a class="item" href="http://www.renewableuk.com/page/UKWEDhome" target="_blank">
+          Renewable UK
+        </a>
       </div>
-    <!--top menu bar left-->
-    <div>
-      <a class="header item" href="/"><i class="ui chart inverted line icon"></i>  EnergyDashboard</a>
     </div>
-    <a class="item mobile-small hidden" href="/live">
-      Live
-    </a>
-    <a class="item" href="/fourtyeight">
-      48hr
-    </a>
-    <a class="item mobile-small hidden" href="/map">
-      Map
-    </a>
-    <!--top menu bar right-->
-    <div class="right menu mobile hidden">
-      <a class="ui item" href="/about">
-        About
-      </a>
-      <a class="ui item" href="/data">
-        Data Sources
-      </a>
-    </div>
+  <!--top menu bar left-->
+  <div>
+    <a class="header item" href="/"><i class="ui chart inverted line icon"></i>  EnergyDashboard</a>
   </div>
+  <a class="item mobile-small hidden" href="/live">
+    Live
+  </a>
+  <a class="item" href="/fourtyeight">
+    48hr
+  </a>
+  <a class="item mobile-small hidden" href="/map">
+    Map
+  </a>
+  <!--top menu bar right-->
+  <div class="right menu mobile hidden">
+    <a class="ui item" href="/about">
+      About
+    </a>
+    <a class="ui item" href="/data">
+      Data Sources
+    </a>
+  </div>
+</div>
 
 <script>
 // dropdown menu activation
 $('.ui.dropdown').dropdown();
+
+// var click = function(){
+//   if((!$('#'+this.id).hasClass('clickedmenu'))){
+//     $('.menubutton').removeClass('clickedmenu')
+//     $('#'+this.id).toggleClass("clickedmenu");
+//   }
+// }
+
+// $('.menubutton').click(click);
+
 </script>
 
       
