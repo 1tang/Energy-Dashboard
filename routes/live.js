@@ -1,4 +1,4 @@
-let express = require("express"),
+const express = require("express"),
     router = express.Router(),
     parseString = require('xml2js').parseString,
     moment = require('moment'),

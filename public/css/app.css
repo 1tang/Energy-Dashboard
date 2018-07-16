@@ -69,7 +69,6 @@ h3.ui.header.left.aligned {
     color: #22B5AC;
 }
 
-
 h3.ui.header {
     color: #3d3d3d;
 }
@@ -143,6 +142,15 @@ a {
     color: #2092C8;
 }
 
+#contact-success {
+    color: #22B5AC;
+}
+
+.ui.button.submit {
+    background-color: #2092C8;
+    color: white;
+}
+
 .col-gas {
     color: rgba(55, 150, 201, 1);
 }
@@ -179,6 +187,10 @@ a {
     text-align: center;
 }
 
+.contact-box {
+    padding-top: 40px;
+}
+
 /*MEDIA QUERIES*/
 
 /*Mobile */
@@ -195,6 +207,20 @@ a {
     }
 }
 
+/* @media (min-height: 500px) {
+
+    .vertical.footer.segment {
+ 
+    position: relative;
+ 
+    bottom: 0;
+ 
+    width: 100%;
+ 
+    }
+ 
+ } */
+ 
 
 
 /* Tablet / iPad Portrait */
@@ -221,18 +247,5 @@ a {
 
 /*}*/
 
-/*footer move to bottom*/
+/* footer move to bottom/*
 
-/*@media (min-height: 500px) {*/
-
-/*  .vertical.footer.segment { */
-
-/*    position: absolute;*/
-
-/*    bottom: 0;*/
-
-/*    width: 100%;*/
-
-/*  }*/
-
-/*}*/

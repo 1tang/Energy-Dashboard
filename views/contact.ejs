@@ -1,51 +1,36 @@
 <% include partials/header %>
 
-<div class="coming-soon">
-    <div class="ui container" style="padding-top:50%">
-        <div class="ui grid center aligned">
-            <div class="row">
-                <div class="sixteen wide tablet six wide computer column">
-                    <h1 class="ui header center aligned inverted">PAGE COMING SOON...</h1>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="ui center aligned padded grid">
+   <div class="one column row">
+        <div class="sixteen wide tablet twelve wide computer column contact-box">
+           <div class="ui raised segments">
+               <div class="ui secondary segment">
+                   <h2 class="ui header"> Get in Contact!</h2>
+               </div>
+               <div class="ui segment">
+                   <form class="ui form fluid" action="send" method="POST">
+                       <div class="two fields">
+                           <div class="field">
+                             <label>Name</label>
+                             <input type="text" name="name" placeholder="Name" >
+                           </div>
+                           <div class="field">
+                             <label>Email</label>
+                             <input type="email" name="email" placeholder="joe@schmoe.com">
+                           </div>
+                       </div>
+                       <div class="field">
+                            <label>Message</label>
+                            <textarea name="message" rows="5" placeholder="Your message .."></textarea>
+                       </div>
+                       <input class="ui button submit" type="submit" value="Submit"></input>
+                    </form>
+                    <h3 id="contact-success"><%=msg%></h3>
+               </div>
+           </div>
+       </div>
+   </div>
 </div>
 
-<% include partials/footer %>
 
-<!--<div class="ui center aligned padded grid">-->
-<!--    <div class="one column row">-->
-<!--         <div class="sixteen wide tablet twelve wide computer column">-->
-<!--            <div class="ui raised segments">-->
-<!--                <div class="ui secondary inverted segment">-->
-<!--                    <h2 class="ui header"> Get in Contact!</h2>-->
-<!--                </div>-->
-<!--                <div class="ui segment">-->
-<!--                    <div class="ui form fluid">-->
-<!--                        <div class="three fields">-->
-<!--                            <div class="field">-->
-<!--                              <label>First name</label>-->
-<!--                              <input type="text" placeholder="First Name">-->
-<!--                            </div>-->
-<!--                            <div class="field">-->
-<!--                              <label>Last name</label>-->
-<!--                              <input type="text" placeholder="Last Name">-->
-<!--                            </div>-->
-<!--                            <div class="field">-->
-<!--                              <label>E-mail</label>-->
-<!--                              <input type="email" placeholder="joe@schmoe.com">-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="field">-->
-<!--                            <div class="field">-->
-<!--                                <label>Message</label>-->
-<!--                                <textarea></textarea>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
+<% include partials/footer %>
