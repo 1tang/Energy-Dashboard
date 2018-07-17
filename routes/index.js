@@ -41,8 +41,8 @@ router.post("/send", (req, res) => {
 
     // setup email data with unicode symbols
     let mailOptions = {
-        from: '"Nodemailer Contact" <dan_thory@hotmail.com>', // sender address
-        to: 'info@energydashboard.co.uk', // list of receivers
+        from: process.env.MYEMAIL, // sender address
+        to: process.env.EDASH_MAIL, // list of receivers
         subject: 'Energy Dashboard Contact Request', // Subject line
         text: 'Hello world?', // plain text body
         html: output // html body
