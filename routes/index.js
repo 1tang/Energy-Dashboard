@@ -13,10 +13,10 @@ router.get('/', (req, res) => {
 
 // contact route
 router.get('/contact', (req, res) => {
-    res.render('contact', {msg: ""});
+    res.render('contact', {msg: "", contHead: "Get in Contact!"});
 });
 
-router.post("/send", (req, res) => {
+router.post("/contact/send", (req, res) => {
     const output = `
         <p>You have a new contact request</p>
         <h3>Contact Details</h3>
@@ -55,11 +55,8 @@ router.post("/send", (req, res) => {
         }
         console.log('Message sent: %s', info.messageId);
         console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-        res.render('contact', {msg: "Your message was sent successfully - thanks!"});
-          
-    
+        res.render('contact', {msg: "Your message was sent successfully - thanks!", contHead: "Message Sent!"});
     });
-    
 });
 
 // about route

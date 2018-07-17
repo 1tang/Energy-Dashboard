@@ -5,23 +5,23 @@
         <div class="sixteen wide tablet twelve wide computer column contact-box">
            <div class="ui raised segments">
                <div class="ui secondary segment">
-                   <h2 class="ui header"> Get in Contact!</h2>
+                   <h2 class="ui header"> <%=contHead%></h2>
                </div>
                <div class="ui segment">
-                   <form class="ui form fluid" action="send" method="POST">
+                   <form class="ui form fluid" action="contact/send" method="POST">
                        <div class="two fields">
                            <div class="field">
                              <label>Name</label>
-                             <input type="text" name="name" placeholder="Name" >
+                             <input type="text" name="name" placeholder="Name" required="required">
                            </div>
                            <div class="field">
                              <label>Email</label>
-                             <input type="email" name="email" placeholder="joe@schmoe.com">
+                             <input type="email" name="email" placeholder="joe@schmoe.com" required="required">
                            </div>
                        </div>
                        <div class="field">
                             <label>Message</label>
-                            <textarea name="message" rows="5" placeholder="Your message .."></textarea>
+                            <textarea name="message" rows="10" placeholder="Your message .." required="required"></textarea>
                        </div>
                        <input class="ui button submit" type="submit" value="Submit"></input>
                     </form>
