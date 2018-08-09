@@ -142,6 +142,15 @@ a {
     color: #2092C8;
 }
 
+a:hover {
+    font-size: 16;
+    color: #22B5AC;
+}
+
+a:visited {
+    color: red;
+}
+
 #contact-success {
     color: #22B5AC;
 }
