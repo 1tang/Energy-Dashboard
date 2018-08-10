@@ -59,13 +59,13 @@ router.get("/live", (req, res) => {
         const coal = (context.two.response.responseBody[0].responseList[0].item[3].currentMW[0] / 1000);
         const nuclear = (context.two.response.responseBody[0].responseList[0].item[4].currentMW[0] / 1000);
         const wind = (context.two.response.responseBody[0].responseList[0].item[5].currentMW[0] / 1000);
-        const biomass = (context.two.response.responseBody[0].responseList[0].item[13].currentMW[0] / 1000) + (context.two.response.responseBody[0].responseList[0].item[8].currentMW[0] / 1000);
-        const ics = (context.two.response.responseBody[0].responseList[0].item[11].currentMW[0] / 1000) + (context.two.response.responseBody[0].responseList[0].item[9].currentMW[0] / 1000) + (context.two.response.responseBody[0].responseList[0].item[10].currentMW[0] / 1000) + (context.two.response.responseBody[0].responseList[0].item[12].currentMW[0] / 1000);
-        const other = (context.two.response.responseBody[0].responseList[0].item[1].currentMW[0] / 1000) + (context.two.response.responseBody[0].responseList[0].item[2].currentMW[0] / 1000);
+        const biomass = Number(((context.two.response.responseBody[0].responseList[0].item[13].currentMW[0] / 1000) + (context.two.response.responseBody[0].responseList[0].item[8].currentMW[0] / 1000)).toFixed(3));
+        const ics = Number(((context.two.response.responseBody[0].responseList[0].item[11].currentMW[0] / 1000) + (context.two.response.responseBody[0].responseList[0].item[9].currentMW[0] / 1000) + (context.two.response.responseBody[0].responseList[0].item[10].currentMW[0] / 1000) + (context.two.response.responseBody[0].responseList[0].item[12].currentMW[0] / 1000)).toFixed(3));
+        const other = Number(((context.two.response.responseBody[0].responseList[0].item[1].currentMW[0] / 1000) + (context.two.response.responseBody[0].responseList[0].item[2].currentMW[0] / 1000)).toFixed(3));
         const pumpHydro = (context.two.response.responseBody[0].responseList[0].item[6].currentMW[0] / 1000);
         const hydro = (context.two.response.responseBody[0].responseList[0].item[7].currentMW[0] / 1000);
         const total = (context.two.response.responseBody[0].total[0].currentTotalMW[0] / 1000);
-        const totalAll = (context.two.response.responseBody[0].total[0].currentTotalMW[0] / 1000) + (context.one.data[0][2] / 1000);
+        const totalAll = Number(((context.two.response.responseBody[0].total[0].currentTotalMW[0] / 1000) + (context.one.data[0][2] / 1000)).toFixed(3));
         // time and date formatting for live/current data
         const time = moment(context.two.response.responseBody[0].dataLastUpdated[0]).tz("Europe/London").format('h:mm A');
         const date = moment().format('dddd Do MMMM');
@@ -80,8 +80,6 @@ router.get("/live", (req, res) => {
         const biomassToday = [];
         const icsToday = [];
         const otherToday = [];
-        const pumpHydroToday = [];
-        const hydroToday = [];
         const hydroTodayAll = [];
         const totalToday = [];
         const totalTodayNoWind = [];
@@ -104,14 +102,12 @@ router.get("/live", (req, res) => {
             coalToday.push((arrayToday[i].coal[0]) / 1000);
             nuclearToday.push((arrayToday[i].nuclear[0]) / 1000);
             windToday.push((arrayToday[i].wind[0]) / 1000);
-            hydroToday.push((arrayToday[i].npshyd[0]) / 1000);
-            pumpHydroToday.push((arrayToday[i].ps[0]) / 1000);
             totalToday.push(allTotal);
             totalTodayNoWind.push(allTotalNoWind);
-            icsToday.push(icsTotal);
-            otherToday.push(othTotal);
-            biomassToday.push(bioTotal);
-            hydroTodayAll.push(hydroTotal);
+            icsToday.push(Number(icsTotal.toFixed(3)));
+            otherToday.push(Number(othTotal).toFixed(3));
+            biomassToday.push(Number(bioTotal.toFixed(3)));
+            hydroTodayAll.push(Number(hydroTotal.toFixed(3)));
             // during each loop add cumulative totals for fossil fuels, renewables and low carbon, 
             // each figure divided by 2 as they represent half hour periods only
             totalFossilToday += ((othTotal + icsTotal + ((arrayToday[i].ccgt[0]) / 1000) + ((arrayToday[i].coal[0]) / 1000) + ((arrayToday[i].ps[0]) / 1000)) / 2);
@@ -127,7 +123,7 @@ router.get("/live", (req, res) => {
             if(arraySolarToday[t][2] == null || NaN) {
                 arraySolarToday[t][2] = 0;
             }
-            solarToday.push((arraySolarToday[t][2]) / 1000);
+            solarToday.push(Number((arraySolarToday[t][2] / 1000).toFixed(3)));
         }
 
         let totalSolarToday = 0;
@@ -165,20 +161,22 @@ router.get("/live", (req, res) => {
         // wind array incl estimated embedded generation ** simplistic calculation / not using **
         // const embeddedWindToday2 = windToday.map((item, i) => item + ((item/meteredWindCap)*embeddedEstimateWind ));
 
-        // scale up offshore contribution (1.1645) based on 26.6% / 37.2% load factor (renewable UK ** will need an update**) & then calculate actual onshore load factor,  embedded estimate then added to metered wind output
-        const embeddedWindToday = windToday.map((item, i) => (((item - (((offshoreWindCap / meteredWindCap) * item) * 1.28)) / (onshoreWindCap - embeddedEstimateWind)) * embeddedEstimateWind) + item);
+        // scale up offshore contribution (1.1645) based on 26.6% / 37.2% load factor (renewable UK ** will need an update**) & then calculate actual onshore load factor,  embedded estimate then added to metered 
+        // wind output
+        const embeddedWindToday = windToday.map((item, i) => Number((((item - (((offshoreWindCap / meteredWindCap) * item) * 1.28)) / (onshoreWindCap - embeddedEstimateWind)) * embeddedEstimateWind) + item).toFixed(3));
+     
         // current latest figs scaled up
-        const windEmbedded = ((((wind - (((offshoreWindCap / meteredWindCap) * wind) * 1.28)) / (onshoreWindCap - embeddedEstimateWind)) * embeddedEstimateWind) + wind);
-
+        const windEmbedded = Number(((((wind - (((offshoreWindCap / meteredWindCap) * wind) * 1.28)) / (onshoreWindCap - embeddedEstimateWind)) * embeddedEstimateWind) + wind).toFixed(3));
+    
         // new array with total generation incl embedded wind (not solar)
-        const embeddedTotal = totalTodayNoWind.map((item, i) => item + embeddedWindToday[i]);
+        const embeddedTotal = totalTodayNoWind.map((item, i) => Number(item) + Number(embeddedWindToday[i])); 
         // new array with total generation incl embedded wind & solar, checks that arrays are same length
         if(embeddedTotal.length === solarToday.length) {
-            var embeddedTotalWithSolar = embeddedTotal.map((item, i) => item + solarToday[i]);
+            var embeddedTotalWithSolar = embeddedTotal.map((item, i) => Number((item + solarToday[i]).toFixed(3)));
         }
         else {
             embeddedTotal.splice(-1, 1);
-            embeddedTotalWithSolar = embeddedTotal.map((item, i) => item + solarToday[i]);
+            embeddedTotalWithSolar = embeddedTotal.map((item, i) => Number((item + solarToday[i]).toFixed(3)));
         }
 
         //cumulative grand total GWh
@@ -244,8 +242,6 @@ router.get("/live", (req, res) => {
             icsToday: icsToday,
             otherToday: otherToday,
             solarToday: solarToday,
-            hydroToday: hydroToday,
-            pumpHydroToday: pumpHydroToday,
             hydroTodayAll: hydroTodayAll,
             totalFossilToday: totalFossilToday,
             totalRenewToday: totalRenewToday,
@@ -268,7 +264,7 @@ router.get("/live", (req, res) => {
             timeHalfHourly: timeHalfHourly,
             totalRenewTodayEmbedded: totalRenewTodayEmbedded
         });
-
+     
         // error handling for bluebird promises   
     }).catch((err) => {
         if(err) {

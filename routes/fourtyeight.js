@@ -60,15 +60,15 @@ router.get("/fourtyeight", (req, res) => {
             timePeriod.push(array48[i].settlementPeriod[0]);
             total48.push(allTotal);
             total48NoWind.push(allTotalNoWind);
-            ccgt.push((array48[i].ccgt[0]) / 1000).toFixed(3);
-            coal.push((array48[i].coal[0]) / 1000).toFixed(3);
-            nuclear.push((array48[i].nuclear[0]) / 1000).toFixed(3);
-            wind.push((array48[i].wind[0]) / 1000).toFixed(3);
+            ccgt.push(Number((array48[i].ccgt[0] / 1000).toFixed(3)));
+            coal.push(Number((array48[i].coal[0] / 1000).toFixed(3)));
+            nuclear.push(Number((array48[i].nuclear[0] / 1000).toFixed(3)));
+            wind.push(Number((array48[i].wind[0] / 1000).toFixed(3)));
             date.push(array48[i].startTimeOfHalfHrPeriod[0]);
-            ics.push((icsTotal.toFixed(3)));
-            other.push((othTotal.toFixed(3)));
-            hydro.push((hydroTotal.toFixed(3)));
-            biomass.push((bioTotal.toFixed(3)));
+            ics.push(Number(icsTotal.toFixed(3)));
+            other.push(Number(othTotal.toFixed(3)));
+            hydro.push(Number(hydroTotal.toFixed(3)));
+            biomass.push(Number(bioTotal.toFixed(3)));
             totalMwh48 += (allTotal / 2);
             totalMwh48NoWind += (allTotalNoWind / 2);
             totalFossil48 += ((othTotal + icsTotal + ((array48[i].ccgt[0]) / 1000) + ((array48[i].coal[0]) / 1000) + ((array48[i].ps[0]) / 1000)) / 2);
@@ -84,7 +84,7 @@ router.get("/fourtyeight", (req, res) => {
             if(solar48[t][2] == null) {
                 solar48[t][2] = 0;
             }
-            arraySolar48.push(solar48[t][2] / 1000);
+            arraySolar48.push(Number((solar48[t][2] / 1000).toFixed(3)));
         }
 
         // cumulative total solar
@@ -134,12 +134,12 @@ router.get("/fourtyeight", (req, res) => {
         const meteredWindCap = (Number(onshoreWindCap) + Number(offshoreWindCap) - embeddedEstimateWind); //13.233GW
 
         // scale up offshore contribution ( prev 1.1645) based on 26.6% / 37.2% load factor & then calculate actual onshore load factor, * embedded estimate then add to metered wind output
-        const embeddedWind48 = wind.map((item, i) => (((item - (((offshoreWindCap / meteredWindCap) * item) * 1.28)) / (onshoreWindCap - embeddedEstimateWind)) * embeddedEstimateWind) + item);
+        const embeddedWind48 = wind.map((item, i) => Number((((item - (((offshoreWindCap / meteredWindCap) * item) * 1.28)) / (onshoreWindCap - embeddedEstimateWind)) * embeddedEstimateWind) + item).toFixed(3));
         // new array with total generation incl embedded wind (not solar)
-        const embeddedTotal = total48NoWind.map((item, i) => item + embeddedWind48[i]);
+        const embeddedTotal = total48NoWind.map((item, i) => Number(item) + Number(embeddedWind48[i]));
         let totalMwhEmbedded = totalSolar48;
         embeddedTotal.forEach((item) => {
-            totalMwhEmbedded += (item / 2);
+            totalMwhEmbedded += item / 2;
         });
         // total cumulative renewables
         let embeddedWindCumul = 0;
