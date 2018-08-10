@@ -98,29 +98,23 @@ router.get("/fourtyeight", (req, res) => {
         timePeriod.forEach((period) => {
             const seconds = period * 30 * 60;
             if((seconds / 60 / 60) < 10) {
-                var hours = "0" + Math.floor(seconds / 60 / 60);
+                var hours = 0 + Math.floor(seconds / 60 / 60);
             }
             else {
                 hours = Math.floor(seconds / 60 / 60);
             }
             if((seconds / 60) - (hours * 60) === 0) {
                 const minutes = 0;
-                convertTime.push((hours + ":" + minutes.toFixed(0)) + 0);
+                convertTime.push((hours.toFixed(0) + minutes.toFixed(0)) + 0);
             }
             else {
                 const minutes2 = (seconds / 60) - (hours * 60);
-                convertTime.push(hours + ":" + minutes2.toFixed(0));
+                convertTime.push(hours.toFixed(0) + minutes2.toFixed(0));
             }
         });
 
-        const dateTime = date.map((item, i) => item + " " + convertTime[i]);
-        const timeArray = [];
-        dateTime.forEach((item) => {
-            timeArray.push(moment(item).format("MMM Do H:mm"));
-        });
-
-        const timeTo = timeArray[(timePeriod.length) - 1];
-        const timeFrom = timeArray[0];
+        const timeTo = moment(date[(date.length) - 1]).format("MMM Do") + " (" + convertTime[convertTime.length-1] + ")";
+        const timeFrom = moment(date[0]).format("MMM Do") + " (0030)";
 
         //calculations for embedded wind generation, using national grids estimated embedded capacity figs (currently 5.978GW )
         // published onshore & offshore figs from renewable UK ***needs updating***
@@ -166,8 +160,10 @@ router.get("/fourtyeight", (req, res) => {
             totalFossil48: totalFossil48,
             renewTotalCumul: renewTotalCumul,
             totalLowc48: totalLowc48,
-            arraySolar48: arraySolar48
+            arraySolar48: arraySolar48,
+            convertTime: convertTime
         });
+
         // error handling for bluebird promises   
     }).catch((err) => {
         if(err) {

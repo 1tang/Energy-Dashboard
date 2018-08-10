@@ -382,7 +382,7 @@ var data2 = {
 
 // Today's Half-hourly and Total Generation - line chart data
 var data3 = {
-    labels: [<%= timePeriodToday %>],
+    labels: [<%= convertTime %>],
     datasets: [{
         fill: true,
         label: 'Gas',
@@ -445,7 +445,7 @@ var data3 = {
 
 //Demand Vs Generation - line chart data
 var data4 = {
-    labels: [<%= timeDem%>],
+    labels: [<%= convertTime%>],
     datasets: [{
         type: "line",
         fill: false,

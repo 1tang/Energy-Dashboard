@@ -199,18 +199,18 @@ router.get("/live", (req, res) => {
         timePeriodToday.forEach((period) => {
             const seconds = period * 30 * 60;
             if((seconds / 60 / 60) < 10) {
-                var hours = "0" + Math.floor(seconds / 60 / 60);
+                var hours = 0 + Math.floor(seconds / 60 / 60);
             }
             else {
                 hours = Math.floor(seconds / 60 / 60);
             }
             if((seconds / 60) - (hours * 60) === 0) {
                 const minutes = 0;
-                convertTime.push((hours + ":" + minutes.toFixed(0)) + 0);
+                convertTime.push((hours.toFixed(0) + minutes.toFixed(0)) + 0);
             }
             else {
                 const minutes2 = (seconds / 60) - (hours * 60);
-                convertTime.push(hours + ":" + minutes2.toFixed(0));
+                convertTime.push(hours.toFixed(0) + minutes2.toFixed(0));
             }
         });
 
@@ -262,9 +262,10 @@ router.get("/live", (req, res) => {
             windEmbedded: windEmbedded,
             genLatestEmbedded: genLatestEmbedded,
             timeHalfHourly: timeHalfHourly,
-            totalRenewTodayEmbedded: totalRenewTodayEmbedded
+            totalRenewTodayEmbedded: totalRenewTodayEmbedded,
+            convertTime: convertTime
         });
-     
+        
         // error handling for bluebird promises   
     }).catch((err) => {
         if(err) {
