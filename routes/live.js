@@ -3,7 +3,7 @@ const express = require("express"),
     parseString = require('xml2js').parseString,
     moment = require('moment'),
     mtz = require('moment-timezone'),
-    async = require('async'),
+    // async = require('async'),
     Promise = require("bluebird"),
     request = Promise.promisifyAll(require("request"), { multiArgs: true });
 
@@ -213,7 +213,7 @@ router.get("/live", (req, res) => {
                 convertTime.push(hours.toFixed(0) + minutes2.toFixed(0));
             }
         });
-
+    
         // latest half hourly time stamp
         const timeHalfHourly = (convertTime[((convertTime.length) - 1)]);
 
