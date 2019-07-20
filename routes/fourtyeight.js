@@ -16,7 +16,7 @@ router.get("/fourtyeight", (req, res) => {
     const yestDateSolar = moment().subtract(2, 'days').format("YYYY-MM-DD");
     // url's for past 48 hrs json & xml data
     const fuelInst = "https://api.bmreports.com/BMRS/FUELHH/V1?APIKey=16hudca3onmwxcy&FromDate=" + yestDate + "&ToDate=" + todayDate + "&ServiceType=xml";
-    const todayYestSolar = "https://api0.solar.sheffield.ac.uk/pvlive/v1?start=" + yestDateSolar + "T23:30:00&end=" + todayDate + "T23:59:59";
+    const todayYestSolar = "https://api0.solar.sheffield.ac.uk/pvlive/v2?start=" + yestDateSolar + "T23:30:00&end=" + todayDate + "T23:59:59";
     const context = {};
 
     request.getAsync(fuelInst).spread((response, body) => {

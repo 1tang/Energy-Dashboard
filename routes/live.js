@@ -15,10 +15,12 @@ router.get("/live", (req, res) => {
     const todayDate = moment().format("YYYY-MM-DD");
     const yestDate = moment().subtract(1, 'days').format("YYYY-MM-DD");
     // url's for live/current (today only) JSON and XML energy data
-    const solarInst = "https://api0.solar.sheffield.ac.uk/pvlive/v1";
+    // legacy ended may 2019
+    // const solarInst = "https://api0.solar.sheffield.ac.uk/pvlive/v1";
+    const solarInst = "https://api0.solar.sheffield.ac.uk/pvlive/v2/";
     const fuelInst = "https://api.bmreports.com/BMRS/FUELINSTHHCUR/V1?APIKey=16hudca3onmwxcy&ServiceType=xml";
     const todayGenFuel = "https://api.bmreports.com/BMRS/FUELHH/V1?APIKey=16hudca3onmwxcy&FromDate=" + todayDate + "&ToDate=" + todayDate + "&ServiceType=xml";
-    const todaySolar = "https://api0.solar.sheffield.ac.uk/pvlive/v1?start=" + yestDate + "T23:30:00&end=" + todayDate + "T23:59:59";
+    const todaySolar = "https://api0.solar.sheffield.ac.uk/pvlive/v2?start=" + yestDate + "T23:30:00&end=" + todayDate + "T23:59:59";
     const todayDemand = "https://api.bmreports.com/BMRS/INDOITSDO/V1?APIKey=16hudca3onmwxcy&FromDate=" + todayDate + "&ToDate=" + todayDate + "&ServiceType=xml";
 
     const context = {};
