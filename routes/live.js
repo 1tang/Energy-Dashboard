@@ -298,7 +298,7 @@ router.get('/live', (req, res) => {
       // onshore wind capacity (excl embedded) ie what is metered by NG ** currently 7.098
       const meteredOnshoreWindCap = onshoreWindCap - embeddedEstimateWind;
 
-      // scale up offshore contribution (1.1645) based on 26.6% (onshore) / 38.5% (offshore) load factor (renewable UK *) see https://www.renewableuk.com/page/UKWEDExplained
+      // scale up offshore contribution (1.1645) based on 26.6% (onshore) / 38.5% (offshore) load factor (renewable UK*) * https://www.renewableuk.com/page/UKWEDExplained
       const offshoreProp = offshoreWindCap * 0.385;
       const onshoreProp = meteredOnshoreWindCap * 0.266;
       const propTotal = offshoreProp + onshoreProp;
@@ -307,12 +307,16 @@ router.get('/live', (req, res) => {
       const onShoreScaleFactor = embeddedEstimateWind / meteredOnshoreWindCap;
 
       const embeddedWindToday = windToday.map((item, i) =>
-        Number(item * onshorePercent * onShoreScaleFactor + item).toFixed(3)
+        Number(item * onshorePercent * onShoreScaleFactor * 0.9 + item).toFixed(
+          3
+        )
       );
 
-      const windEmbedded = Number(
-        wind * onshorePercent * onShoreScaleFactor + wind
+      const windEmbeddedCalc = Number(
+        wind * onshorePercent * onShoreScaleFactor * 0.9 + wind
       ).toFixed(3);
+
+      const windEmbedded = Number(windEmbeddedCalc);
 
       // new array with total generation incl embedded wind (not solar)
       const embeddedTotal = totalTodayNoWind.map(
