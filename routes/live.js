@@ -7,6 +7,9 @@ const express = require('express'),
   Promise = require('bluebird'),
   request = Promise.promisifyAll(require('request'), { multiArgs: true });
 
+import * as request2 from 'request';
+import { bindNodeCallback, forkJoin } from 'rxjs';
+
 // mutiple url requests using promises - uses the bluebird prmises library, serializing
 //several url requests and accumuating the reults in the context object, rolling up error
 //handing at the end after page rendered
