@@ -1,18 +1,9 @@
 const express = require('express'),
   router = express.Router(),
-  parseString = require('xml2js').parseString,
   moment = require('moment'),
-  mtz = require('moment-timezone'),
-  // async = require('async'),
-  // Promise = require('bluebird'),
-  // request = Promise.promisifyAll(require('request'), { multiArgs: true }),
-  request2 = require('request'),
-  convert = require('xml-js'),
+  request = require('request'),
   xml2js = require('xml2js');
 
-// mutiple url requests using promises - uses the bluebird prmises library, serializing
-//several url requests and accumuating the reults in the context object, rolling up error
-//handing at the end after page rendered
 router.get('/live', (req, res) => {
   // today's date formatted for bmreports
   const todayDate = moment().format('YYYY-MM-DD');
@@ -26,37 +17,15 @@ router.get('/live', (req, res) => {
     `https://api.bmreports.com/BMRS/INDOITSDO/V1?APIKey=16hudca3onmwxcy&FromDate=${todayDate}&ToDate=${todayDate}&ServiceType=xml`,
   ];
 
-  console.log(urls);
-
-  // let requests = urls.map((url) => {
-  //   return new Promise((resolve, reject) => {
-  //     if (url.startsWith('https://api0.solar')) {
-  //       request2(url, (err, response, body) => {
-  //         if (err) return reject(err, response, body);
-  //         resolve(JSON.parse(body));
-  //       });
-  //     } else {
-  //       request2(url, (err, response, body) => {
-  //         if (err) return reject(err, response, body);
-  //         resolve(
-  //           xml2js.parseStringPromise(body, (err, result) => {
-  //             return JSON.parse(JSON.stringify(result));
-  //           })
-  //         );
-  //       });
-  //     }
-  //   });
-  // });
-
   let requestAsync = (url) => {
     return new Promise((resolve, reject) => {
       if (url.startsWith('https://api0.solar')) {
-        request2(url, (err, response, body) => {
+        request(url, (err, response, body) => {
           if (err) return reject(err, response, body);
           resolve(JSON.parse(body));
         });
       } else {
-        request2(url, (err, response, body) => {
+        request(url, (err, response, body) => {
           if (err) return reject(err, response, body);
           resolve(
             xml2js.parseStringPromise(body, (err, result) => {
@@ -68,30 +37,8 @@ router.get('/live', (req, res) => {
     });
   };
 
-  // const context = {};
-
-  // Promise.all(requests)
-  //   .then((response) => {
-  //     // for (let response of responses) {
-  //     //   console.log(`${response}`); // shows 200 for every url
-  //     // }
-  //     const context = {};
-  //     context.one = response[0];
-  //     context.two = response[1];
-  //     context.three = response[2];
-  //     context.four = response[3];
-  //     context.five = response[4];
-  //     console.log(context);
-  //   })
-  //   .catch((err) => {
-  //     if (err) {
-  //       console.log(err);
-  //     }
-  //   });
-
   let getParallel = async () => {
     //transform requests into Promises, await all
-
     await Promise.all(urls.map(requestAsync))
       .then((response) => {
         const context = {};
@@ -161,6 +108,7 @@ router.get('/live', (req, res) => {
         const hydro =
           context.two.response.responseBody[0].responseList[0].item[7]
             .currentMW[0] / 1000;
+
         const total =
           context.two.response.responseBody[0].total[0].currentTotalMW[0] /
           1000;
@@ -171,12 +119,14 @@ router.get('/live', (req, res) => {
             context.one.data[0][2] / 1000
           ).toFixed(3)
         );
+
         // time and date formatting for live/current data
         const time = moment(
           context.two.response.responseBody[0].dataLastUpdated[0]
         )
           .tz('Europe/London')
           .format('h:mm A');
+
         const date = moment().format('dddd Do MMMM');
 
         // non solar data for current day
@@ -450,7 +400,6 @@ router.get('/live', (req, res) => {
           convertTime: convertTime,
         });
       })
-
       .catch(function (err) {
         console.error(err);
       });
