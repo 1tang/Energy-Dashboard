@@ -7,8 +7,8 @@ let express = require('express'),
 
 router.get('/fourtyeight', (req, res) => {
   const todayDate = moment().format('YYYY-MM-DD');
-  const yestDate = moment().subtract(1, 'days').format('YYYY-MM-DD');
-  const yestDateSolar = moment().subtract(2, 'days').format('YYYY-MM-DD');
+  const yestDate = moment().subtract(2, 'days').format('YYYY-MM-DD');
+  const yestDateSolar = moment().subtract(3, 'days').format('YYYY-MM-DD');
   // url's for past 48 hrs json & xml data
 
   const urls = [
