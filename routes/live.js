@@ -1,6 +1,7 @@
 const express = require('express'),
   router = express.Router(),
   moment = require('moment'),
+  mtz = require('moment-timezone'),
   request = require('request'),
   xml2js = require('xml2js');
 
@@ -119,6 +120,8 @@ router.get('/live', (req, res) => {
             context.one.data[0][2] / 1000
           ).toFixed(3)
         );
+
+        moment;
 
         // time and date formatting for live/current data
         const time = moment(
@@ -400,8 +403,10 @@ router.get('/live', (req, res) => {
           convertTime: convertTime,
         });
       })
-      .catch(function (err) {
-        console.error(err);
+      .catch((err) => {
+        if (err) {
+          console.log(err);
+        }
       });
   };
 
