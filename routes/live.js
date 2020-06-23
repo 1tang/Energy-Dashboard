@@ -38,7 +38,7 @@ router.get('/live', (req, res) => {
     });
   };
 
-  let getParallel = async () => {
+  let getParallel = () => {
     //transform requests into Promises, await all
     await Promise.all(urls.map(requestAsync))
       .then((response) => {
